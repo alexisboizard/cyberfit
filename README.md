@@ -66,6 +66,37 @@ dart run flutterfire_cli:flutterfire configure
 flutter run
 ```
 
+## CI/CD
+
+Trois workflows GitHub Actions sont configurés :
+
+| Workflow | Déclencheur | Résultat |
+|----------|-------------|----------|
+| **CI** | Push/PR sur `main` | Lint, analyse, tests |
+| **Build** | Push `main`, tags `v*`, manuel | APK + IPA en artifacts |
+| **Distribute** | Manuel | Envoi aux testeurs via Firebase App Distribution |
+
+### Tester sur un device
+
+**Android** — Télécharger l'APK depuis l'onglet Actions → Build → artifact
+
+**iOS** — Deux options :
+1. **Firebase App Distribution** (recommandé) : les testeurs recoivent un lien par email
+2. **TestFlight** : uploader l'IPA manuellement sur App Store Connect
+
+### Secrets GitHub requis
+
+| Secret | Usage |
+|--------|-------|
+| `KEYSTORE_BASE64` | Keystore Android (base64) |
+| `KEY_PROPERTIES` | Config signing Android |
+| `P12_BASE64` | Certificat Apple (base64) |
+| `P12_PASSWORD` | Mot de passe du certificat |
+| `PROVISIONING_PROFILE_BASE64` | Provisioning profile Ad Hoc (base64) |
+| `FIREBASE_APP_ID_ANDROID` | App ID Firebase Android |
+| `FIREBASE_APP_ID_IOS` | App ID Firebase iOS |
+| `FIREBASE_TOKEN` | Token CI (`firebase login:ci`) |
+
 ## Documentation
 
 | Document | Description |
