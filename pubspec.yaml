@@ -1,0 +1,62 @@
+name: cyberfit
+description: Application mobile de cyber-hygiène gamifiée.
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.0
+  cloud_firestore: ^5.5.0
+  firebase_messaging: ^15.1.0
+  firebase_analytics: ^11.3.0
+
+  # Auth
+  google_sign_in: ^6.2.0
+
+  # State management
+  flutter_riverpod: ^2.6.0
+  riverpod_annotation: ^2.6.0
+
+  # Navigation
+  go_router: ^14.6.0
+
+  # UI/UX
+  flutter_svg: ^2.0.0
+  fl_chart: ^0.69.0
+  confetti_widget: ^0.7.0
+  shimmer: ^3.0.0
+  google_fonts: ^6.2.0
+
+  # Notifications
+  flutter_local_notifications: ^18.0.0
+
+  # Storage
+  shared_preferences: ^2.3.0
+
+  # Utils
+  intl: ^0.19.0
+  timeago: ^3.7.0
+  url_launcher: ^6.3.0
+  package_info_plus: ^8.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  riverpod_generator: ^2.6.0
+  build_runner: ^2.4.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
