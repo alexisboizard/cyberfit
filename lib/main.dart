@@ -13,7 +13,12 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Seed Firestore with initial content if collections are empty
-  await SeedService().seedIfEmpty();
+  // Non-blocking: don't prevent app startup if Firestore is unreachable
+  try {
+    await SeedService().seedIfEmpty();
+  } catch (_) {
+    // Seed will retry on next launch
+  }
 
   // Local notifications
   await NotificationService.init();
