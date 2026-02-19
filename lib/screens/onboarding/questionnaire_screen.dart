@@ -7,11 +7,15 @@ class _Question {
   final String text;
   final String domain;
   final List<_Answer> answers;
+  final bool multipleChoice;
+  final int maxSelections;
 
   const _Question({
     required this.text,
     required this.domain,
     required this.answers,
+    this.multipleChoice = false,
+    this.maxSelections = 0,
   });
 }
 
@@ -23,6 +27,7 @@ class _Answer {
 }
 
 const _questions = [
+  // --- Mots de passe ---
   _Question(
     text: 'Utilisez-vous un gestionnaire de mots de passe ?',
     domain: 'passwords',
@@ -44,15 +49,19 @@ const _questions = [
     ],
   ),
   _Question(
-    text: 'Changez-vous régulièrement vos mots de passe ?',
+    text:
+        'Quels éléments incluez-vous dans vos mots de passe ? (plusieurs réponses possibles)',
     domain: 'passwords',
+    multipleChoice: true,
     answers: [
-      _Answer(text: 'Oui, tous les 3-6 mois', points: 4),
-      _Answer(text: 'Quand je reçois une alerte', points: 3),
-      _Answer(text: 'Rarement', points: 1),
-      _Answer(text: 'Jamais', points: 0),
+      _Answer(text: 'Majuscules et minuscules', points: 1),
+      _Answer(text: 'Chiffres', points: 1),
+      _Answer(text: 'Caractères spéciaux (!@#\$...)', points: 1),
+      _Answer(text: 'Aucun de ces éléments', points: 0),
     ],
   ),
+
+  // --- Authentification ---
   _Question(
     text: 'Avez-vous activé la double authentification (2FA) ?',
     domain: 'authentication',
@@ -74,15 +83,19 @@ const _questions = [
     ],
   ),
   _Question(
-    text: 'Avez-vous sauvegardé vos codes de récupération 2FA ?',
+    text:
+        'Sur quels services avez-vous activé la 2FA ? (plusieurs réponses possibles)',
     domain: 'authentication',
+    multipleChoice: true,
     answers: [
-      _Answer(text: 'Oui, dans un endroit sécurisé', points: 4),
-      _Answer(text: 'Oui, quelque part', points: 2),
-      _Answer(text: 'Non', points: 0),
-      _Answer(text: 'Je n\'utilise pas la 2FA', points: 0),
+      _Answer(text: 'Email principal (Gmail, Outlook...)', points: 1),
+      _Answer(text: 'Réseaux sociaux', points: 1),
+      _Answer(text: 'Banque en ligne', points: 1),
+      _Answer(text: 'Aucun de ces services', points: 0),
     ],
   ),
+
+  // --- Confidentialité ---
   _Question(
     text:
         'Avez-vous vérifié vos paramètres de confidentialité sur les réseaux sociaux ?',
@@ -105,15 +118,19 @@ const _questions = [
     ],
   ),
   _Question(
-    text: 'Avez-vous désactivé le tracking publicitaire ?',
+    text:
+        'Quelles mesures de confidentialité utilisez-vous au quotidien ? (plusieurs réponses possibles)',
     domain: 'privacy',
+    multipleChoice: true,
     answers: [
-      _Answer(text: 'Oui, partout', points: 4),
-      _Answer(text: 'Sur certaines apps', points: 2),
-      _Answer(text: 'Non', points: 0),
-      _Answer(text: 'C\'est quoi ?', points: 0),
+      _Answer(text: 'Navigation privée / VPN', points: 1),
+      _Answer(text: 'Bloqueur de publicités / trackers', points: 1),
+      _Answer(text: 'Refus des cookies non essentiels', points: 1),
+      _Answer(text: 'Aucune de ces mesures', points: 0),
     ],
   ),
+
+  // --- Emails ---
   _Question(
     text: 'Savez-vous reconnaître un email de phishing ?',
     domain: 'emails',
@@ -125,15 +142,19 @@ const _questions = [
     ],
   ),
   _Question(
-    text: 'Ouvrez-vous les pièces jointes d\'expéditeurs inconnus ?',
+    text:
+        'Quels réflexes avez-vous face à un email suspect ? (plusieurs réponses possibles)',
     domain: 'emails',
+    multipleChoice: true,
     answers: [
-      _Answer(text: 'Jamais', points: 4),
-      _Answer(text: 'Rarement, si ça semble important', points: 2),
-      _Answer(text: 'Parfois', points: 1),
-      _Answer(text: 'Oui, souvent', points: 0),
+      _Answer(text: 'Je vérifie l\'adresse de l\'expéditeur', points: 1),
+      _Answer(text: 'Je ne clique jamais sur les liens suspects', points: 1),
+      _Answer(text: 'Je signale les emails de phishing', points: 1),
+      _Answer(text: 'Je n\'ai pas de réflexe particulier', points: 0),
     ],
   ),
+
+  // --- Appareils ---
   _Question(
     text: 'Vos appareils sont-ils à jour ?',
     domain: 'devices',
@@ -155,23 +176,15 @@ const _questions = [
     ],
   ),
   _Question(
-    text: 'Faites-vous des sauvegardes de vos données ?',
+    text:
+        'Quelles protections avez-vous sur vos appareils ? (plusieurs réponses possibles)',
     domain: 'devices',
+    multipleChoice: true,
     answers: [
-      _Answer(text: 'Oui, automatiques et régulières', points: 4),
-      _Answer(text: 'De temps en temps', points: 2),
-      _Answer(text: 'Rarement', points: 1),
-      _Answer(text: 'Jamais', points: 0),
-    ],
-  ),
-  _Question(
-    text: 'Utilisez-vous un antivirus ?',
-    domain: 'devices',
-    answers: [
-      _Answer(text: 'Oui, mis à jour', points: 4),
-      _Answer(text: 'Celui intégré au système', points: 3),
-      _Answer(text: 'Oui mais pas à jour', points: 1),
-      _Answer(text: 'Non', points: 0),
+      _Answer(text: 'Antivirus à jour', points: 1),
+      _Answer(text: 'Sauvegardes automatiques', points: 1),
+      _Answer(text: 'Chiffrement du disque / téléphone', points: 1),
+      _Answer(text: 'Aucune de ces protections', points: 0),
     ],
   ),
 ];
@@ -186,9 +199,21 @@ class QuestionnaireScreen extends ConsumerStatefulWidget {
 
 class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
   int _currentIndex = 0;
-  final Map<int, int> _answers = {};
+  // Single-choice answers: questionIndex -> answerIndex
+  final Map<int, int> _singleAnswers = {};
+  // Multiple-choice answers: questionIndex -> set of selected answer indices
+  final Map<int, Set<int>> _multiAnswers = {};
 
   double get _progress => (_currentIndex + 1) / _questions.length;
+
+  bool get _hasAnswered {
+    final question = _questions[_currentIndex];
+    if (question.multipleChoice) {
+      final selected = _multiAnswers[_currentIndex];
+      return selected != null && selected.isNotEmpty;
+    }
+    return _singleAnswers.containsKey(_currentIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -229,12 +254,26 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 8),
-            Chip(
-              label: Text(
-                _domainLabel(question.domain),
-                style: const TextStyle(fontSize: 12),
-              ),
-              backgroundColor: AppColors.primaryLight.withOpacity(0.1),
+            Row(
+              children: [
+                Chip(
+                  label: Text(
+                    _domainLabel(question.domain),
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  backgroundColor: AppColors.primaryLight.withOpacity(0.1),
+                ),
+                if (question.multipleChoice) ...[
+                  const SizedBox(width: 8),
+                  Chip(
+                    label: const Text(
+                      'Choix multiple',
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                    ),
+                    backgroundColor: AppColors.accent,
+                  ),
+                ],
+              ],
             ),
             const SizedBox(height: 24),
 
@@ -242,54 +281,17 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
             ...question.answers.asMap().entries.map((entry) {
               final idx = entry.key;
               final answer = entry.value;
-              final isSelected = _answers[_currentIndex] == idx;
 
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Material(
-                  color: isSelected
-                      ? AppColors.primary.withOpacity(0.1)
-                      : AppColors.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () => _selectAnswer(idx),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: isSelected
-                              ? AppColors.primary
-                              : AppColors.border,
-                          width: isSelected ? 2 : 1,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              answer.text,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          ),
-                          if (isSelected)
-                            const Icon(
-                              Icons.check_circle,
-                              color: AppColors.primary,
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
+              if (question.multipleChoice) {
+                return _buildMultiChoiceAnswer(idx, answer);
+              }
+              return _buildSingleChoiceAnswer(idx, answer);
             }),
 
             const Spacer(),
 
             // Next button
-            if (_answers.containsKey(_currentIndex))
+            if (_hasAnswered)
               ElevatedButton(
                 onPressed: _next,
                 child: Text(
@@ -304,9 +306,134 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
     );
   }
 
-  void _selectAnswer(int answerIndex) {
+  Widget _buildSingleChoiceAnswer(int idx, _Answer answer) {
+    final isSelected = _singleAnswers[_currentIndex] == idx;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Material(
+        color: isSelected
+            ? AppColors.primary.withOpacity(0.1)
+            : AppColors.surface,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => _selectSingleAnswer(idx),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isSelected ? AppColors.primary : AppColors.border,
+                width: isSelected ? 2 : 1,
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  isSelected
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
+                  color: isSelected ? AppColors.primary : AppColors.textTertiary,
+                  size: 22,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    answer.text,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMultiChoiceAnswer(int idx, _Answer answer) {
+    final selected = _multiAnswers[_currentIndex] ?? {};
+    final isSelected = selected.contains(idx);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Material(
+        color: isSelected
+            ? AppColors.accent.withOpacity(0.1)
+            : AppColors.surface,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => _toggleMultiAnswer(idx),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isSelected ? AppColors.accent : AppColors.border,
+                width: isSelected ? 2 : 1,
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  isSelected
+                      ? Icons.check_box
+                      : Icons.check_box_outline_blank,
+                  color: isSelected ? AppColors.accent : AppColors.textTertiary,
+                  size: 22,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    answer.text,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _selectSingleAnswer(int answerIndex) {
     setState(() {
-      _answers[_currentIndex] = answerIndex;
+      _singleAnswers[_currentIndex] = answerIndex;
+    });
+  }
+
+  void _toggleMultiAnswer(int answerIndex) {
+    setState(() {
+      final current = _multiAnswers[_currentIndex] ?? {};
+      final updated = Set<int>.from(current);
+
+      // If "Aucun" option is selected (last answer with 0 points), deselect others
+      final question = _questions[_currentIndex];
+      final isNoneOption = question.answers[answerIndex].points == 0;
+
+      if (isNoneOption) {
+        // Selecting "none" clears all others
+        updated.clear();
+        updated.add(answerIndex);
+      } else {
+        // Remove any "none" option when selecting a real answer
+        for (int i = 0; i < question.answers.length; i++) {
+          if (question.answers[i].points == 0) {
+            updated.remove(i);
+          }
+        }
+
+        if (updated.contains(answerIndex)) {
+          updated.remove(answerIndex);
+        } else {
+          updated.add(answerIndex);
+        }
+      }
+
+      _multiAnswers[_currentIndex] = updated;
     });
   }
 
@@ -337,18 +464,41 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
 
     for (int i = 0; i < _questions.length; i++) {
       final question = _questions[i];
-      final answerIdx = _answers[i] ?? 0;
-      scores[question.domain] =
-          (scores[question.domain] ?? 0) + question.answers[answerIdx].points;
-      maxScores[question.domain] =
-          (maxScores[question.domain] ?? 0) + 4; // Max is always 4
+
+      if (question.multipleChoice) {
+        // Sum points for all selected answers
+        final selected = _multiAnswers[i] ?? {};
+        int questionScore = 0;
+        for (final idx in selected) {
+          questionScore += question.answers[idx].points;
+        }
+        scores[question.domain] =
+            (scores[question.domain] ?? 0) + questionScore;
+        // Max for multi-choice = sum of all positive-point answers
+        int maxForQuestion = 0;
+        for (final answer in question.answers) {
+          if (answer.points > 0) maxForQuestion += answer.points;
+        }
+        maxScores[question.domain] =
+            (maxScores[question.domain] ?? 0) + maxForQuestion;
+      } else {
+        // Single choice
+        final answerIdx = _singleAnswers[i] ?? 0;
+        scores[question.domain] =
+            (scores[question.domain] ?? 0) +
+            question.answers[answerIdx].points;
+        maxScores[question.domain] =
+            (maxScores[question.domain] ?? 0) + 4; // Max is always 4
+      }
     }
 
     // Normalize to /20
     final normalized = <String, int>{};
     for (final domain in scores.keys) {
       final max = maxScores[domain] ?? 1;
-      normalized[domain] = ((scores[domain]! / max) * 20).round();
+      normalized[domain] = max > 0
+          ? ((scores[domain]! / max) * 20).round()
+          : 0;
     }
 
     context.go('/onboarding/results', extra: normalized);

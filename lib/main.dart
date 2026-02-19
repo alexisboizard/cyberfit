@@ -4,12 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app.dart';
 import 'firebase_options.dart';
 import 'services/notification_service.dart';
+import 'services/seed_service.dart';
 import 'services/storage_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Seed Firestore with initial content if collections are empty
+  await SeedService().seedIfEmpty();
 
   // Local notifications
   await NotificationService.init();
