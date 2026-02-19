@@ -22,7 +22,7 @@ class ChallengeCard extends StatelessWidget {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              color: _categoryColor(challenge.category).withValues(alpha: 0.1),
+              color: _categoryColor(challenge.category).withOpacity(0.1),
               child: Row(
                 children: [
                   Text(
@@ -126,7 +126,7 @@ class _DifficultyBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: _color.withValues(alpha: 0.1),
+        color: _color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

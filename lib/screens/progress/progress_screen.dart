@@ -72,7 +72,7 @@ class ProgressScreen extends ConsumerWidget {
                             )
                             .toList(),
                         borderColor: AppColors.primary,
-                        fillColor: AppColors.primary.withValues(alpha: 0.2),
+                        fillColor: AppColors.primary.withOpacity(0.2),
                         borderWidth: 2,
                       ),
                     ],
@@ -199,9 +199,7 @@ class ProgressScreen extends ConsumerWidget {
                         final c = completed[index];
                         return ListTile(
                           leading: CircleAvatar(
-                            backgroundColor: AppColors.secondary.withValues(
-                              alpha: 0.1,
-                            ),
+                            backgroundColor: AppColors.secondary.withOpacity(0.1),
                             child: const Icon(
                               Icons.check,
                               color: AppColors.secondary,
