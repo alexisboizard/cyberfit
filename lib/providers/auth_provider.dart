@@ -58,9 +58,13 @@ class AuthNotifier extends StateNotifier<AsyncValue<void>> {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final credential = await _auth.signInWithGoogle();
-      if (credential == null) return;
+      if (credential == null) return; // User cancelled
 
-      final user = credential.user!;
+      final user = credential.user;
+      if (user == null) {
+        throw Exception('Connexion Google réussie mais utilisateur introuvable.');
+      }
+
       final existing = await _firestore.getUser(user.uid);
       if (existing == null) {
         await _firestore.createUser(
