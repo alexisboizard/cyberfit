@@ -84,7 +84,8 @@ const _questions = [
     ],
   ),
   _Question(
-    text: 'Avez-vous vérifié vos paramètres de confidentialité sur les réseaux sociaux ?',
+    text:
+        'Avez-vous vérifié vos paramètres de confidentialité sur les réseaux sociaux ?',
     domain: 'privacy',
     answers: [
       _Answer(text: 'Oui, régulièrement', points: 4),
@@ -215,8 +216,9 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
                 value: _progress,
                 minHeight: 8,
                 backgroundColor: AppColors.surfaceVariant,
-                valueColor:
-                    const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                valueColor: const AlwaysStoppedAnimation<Color>(
+                  AppColors.primary,
+                ),
               ),
             ),
             const SizedBox(height: 32),
@@ -232,8 +234,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
                 _domainLabel(question.domain),
                 style: const TextStyle(fontSize: 12),
               ),
-              backgroundColor:
-                  AppColors.primaryLight.withValues(alpha: 0.1),
+              backgroundColor: AppColors.primaryLight.withValues(alpha: 0.1),
             ),
             const SizedBox(height: 24),
 
@@ -258,8 +259,9 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color:
-                              isSelected ? AppColors.primary : AppColors.border,
+                          color: isSelected
+                              ? AppColors.primary
+                              : AppColors.border,
                           width: isSelected ? 2 : 1,
                         ),
                       ),
@@ -272,8 +274,10 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
                             ),
                           ),
                           if (isSelected)
-                            const Icon(Icons.check_circle,
-                                color: AppColors.primary),
+                            const Icon(
+                              Icons.check_circle,
+                              color: AppColors.primary,
+                            ),
                         ],
                       ),
                     ),

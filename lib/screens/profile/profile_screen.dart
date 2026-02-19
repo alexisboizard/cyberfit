@@ -42,14 +42,14 @@ class ProfileScreen extends ConsumerWidget {
                   children: [
                     CircleAvatar(
                       radius: 48,
-                      backgroundColor: AppColors.primaryLight.withValues(alpha: 0.2),
+                      backgroundColor: AppColors.primaryLight.withValues(
+                        alpha: 0.2,
+                      ),
                       child: Text(
                         user.displayName.isNotEmpty
                             ? user.displayName[0].toUpperCase()
                             : '?',
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall
+                        style: Theme.of(context).textTheme.displaySmall
                             ?.copyWith(color: AppColors.primary),
                       ),
                     ),
@@ -108,8 +108,7 @@ class ProfileScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               allBadgesAsync.when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Text('Erreur: $e'),
                 data: (allBadges) {
                   if (allBadges.isEmpty) {
@@ -120,10 +119,7 @@ class ProfileScreen extends ConsumerWidget {
                     runSpacing: 12,
                     children: allBadges.map((badge) {
                       final unlocked = user.badges.contains(badge.id);
-                      return BadgeItem(
-                        badge: badge,
-                        unlocked: unlocked,
-                      );
+                      return BadgeItem(badge: badge, unlocked: unlocked);
                     }).toList(),
                   );
                 },
@@ -131,10 +127,7 @@ class ProfileScreen extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Account info
-              Text(
-                'Compte',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              Text('Compte', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
               Card(
                 child: Column(
@@ -240,10 +233,9 @@ class _StatTile extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 value,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(color: color),
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineMedium?.copyWith(color: color),
               ),
               Text(label, style: Theme.of(context).textTheme.bodySmall),
             ],

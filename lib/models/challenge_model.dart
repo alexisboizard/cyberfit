@@ -12,16 +12,16 @@ class TutorialStep {
   });
 
   factory TutorialStep.fromMap(Map<String, dynamic> map) => TutorialStep(
-        stepNumber: map['stepNumber'] ?? 0,
-        text: map['text'] ?? '',
-        imageUrl: map['imageUrl'],
-      );
+    stepNumber: map['stepNumber'] ?? 0,
+    text: map['text'] ?? '',
+    imageUrl: map['imageUrl'],
+  );
 
   Map<String, dynamic> toMap() => {
-        'stepNumber': stepNumber,
-        'text': text,
-        if (imageUrl != null) 'imageUrl': imageUrl,
-      };
+    'stepNumber': stepNumber,
+    'text': text,
+    if (imageUrl != null) 'imageUrl': imageUrl,
+  };
 }
 
 class ChallengeModel {
@@ -59,7 +59,8 @@ class ChallengeModel {
       difficulty: data['difficulty'] ?? 'easy',
       points: data['points'] ?? 10,
       estimatedMinutes: data['estimatedMinutes'] ?? 5,
-      tutorialSteps: (data['tutorialSteps'] as List<dynamic>?)
+      tutorialSteps:
+          (data['tutorialSteps'] as List<dynamic>?)
               ?.map((s) => TutorialStep.fromMap(s as Map<String, dynamic>))
               .toList() ??
           [],
@@ -69,16 +70,16 @@ class ChallengeModel {
   }
 
   Map<String, dynamic> toFirestore() => {
-        'title': title,
-        'description': description,
-        'category': category,
-        'difficulty': difficulty,
-        'points': points,
-        'estimatedMinutes': estimatedMinutes,
-        'tutorialSteps': tutorialSteps.map((s) => s.toMap()).toList(),
-        'isActive': isActive,
-        'order': order,
-      };
+    'title': title,
+    'description': description,
+    'category': category,
+    'difficulty': difficulty,
+    'points': points,
+    'estimatedMinutes': estimatedMinutes,
+    'tutorialSteps': tutorialSteps.map((s) => s.toMap()).toList(),
+    'isActive': isActive,
+    'order': order,
+  };
 }
 
 class CompletedChallenge {
@@ -106,9 +107,9 @@ class CompletedChallenge {
   }
 
   Map<String, dynamic> toFirestore() => {
-        'challengeId': challengeId,
-        'completedAt': Timestamp.fromDate(completedAt),
-        'pointsEarned': pointsEarned,
-        'category': category,
-      };
+    'challengeId': challengeId,
+    'completedAt': Timestamp.fromDate(completedAt),
+    'pointsEarned': pointsEarned,
+    'category': category,
+  };
 }

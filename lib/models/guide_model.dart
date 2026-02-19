@@ -12,16 +12,16 @@ class GuideStep {
   });
 
   factory GuideStep.fromMap(Map<String, dynamic> map) => GuideStep(
-        stepNumber: map['stepNumber'] ?? 0,
-        text: map['text'] ?? '',
-        imageUrl: map['imageUrl'],
-      );
+    stepNumber: map['stepNumber'] ?? 0,
+    text: map['text'] ?? '',
+    imageUrl: map['imageUrl'],
+  );
 
   Map<String, dynamic> toMap() => {
-        'stepNumber': stepNumber,
-        'text': text,
-        if (imageUrl != null) 'imageUrl': imageUrl,
-      };
+    'stepNumber': stepNumber,
+    'text': text,
+    if (imageUrl != null) 'imageUrl': imageUrl,
+  };
 }
 
 class GuideModel {
@@ -53,7 +53,8 @@ class GuideModel {
       category: data['category'] ?? '',
       platforms: List<String>.from(data['platforms'] ?? []),
       duration: data['duration'] ?? 3,
-      steps: (data['steps'] as List<dynamic>?)
+      steps:
+          (data['steps'] as List<dynamic>?)
               ?.map((s) => GuideStep.fromMap(s as Map<String, dynamic>))
               .toList() ??
           [],
@@ -63,12 +64,12 @@ class GuideModel {
   }
 
   Map<String, dynamic> toFirestore() => {
-        'title': title,
-        'category': category,
-        'platforms': platforms,
-        'duration': duration,
-        'steps': steps.map((s) => s.toMap()).toList(),
-        'tags': tags,
-        'views': views,
-      };
+    'title': title,
+    'category': category,
+    'platforms': platforms,
+    'duration': duration,
+    'steps': steps.map((s) => s.toMap()).toList(),
+    'tags': tags,
+    'views': views,
+  };
 }

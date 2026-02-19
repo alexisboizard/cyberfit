@@ -7,11 +7,7 @@ class BadgeItem extends StatelessWidget {
   final BadgeModel badge;
   final bool unlocked;
 
-  const BadgeItem({
-    super.key,
-    required this.badge,
-    required this.unlocked,
-  });
+  const BadgeItem({super.key, required this.badge, required this.unlocked});
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +41,10 @@ class BadgeItem extends StatelessWidget {
             child: Text(
               unlocked ? badge.name : '???',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: unlocked
-                        ? AppColors.textPrimary
-                        : AppColors.textTertiary,
-                  ),
+                color: unlocked
+                    ? AppColors.textPrimary
+                    : AppColors.textTertiary,
+              ),
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

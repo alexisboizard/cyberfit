@@ -36,8 +36,7 @@ class _GuidesScreenState extends ConsumerState<GuidesScreen> {
                 suffixIcon: _searchQuery.isNotEmpty
                     ? IconButton(
                         icon: const Icon(Icons.clear),
-                        onPressed: () =>
-                            setState(() => _searchQuery = ''),
+                        onPressed: () => setState(() => _searchQuery = ''),
                       )
                     : null,
               ),
@@ -55,15 +54,15 @@ class _GuidesScreenState extends ConsumerState<GuidesScreen> {
                 _FilterChip(
                   label: 'Tous',
                   selected: _selectedCategory == null,
-                  onSelected: () =>
-                      setState(() => _selectedCategory = null),
+                  onSelected: () => setState(() => _selectedCategory = null),
                 ),
-                ...AppConstants.categories.map((cat) => _FilterChip(
-                      label: AppConstants.categoryLabels[cat] ?? cat,
-                      selected: _selectedCategory == cat,
-                      onSelected: () =>
-                          setState(() => _selectedCategory = cat),
-                    )),
+                ...AppConstants.categories.map(
+                  (cat) => _FilterChip(
+                    label: AppConstants.categoryLabels[cat] ?? cat,
+                    selected: _selectedCategory == cat,
+                    onSelected: () => setState(() => _selectedCategory = cat),
+                  ),
+                ),
               ],
             ),
           ),
@@ -72,14 +71,13 @@ class _GuidesScreenState extends ConsumerState<GuidesScreen> {
           // Guides list
           Expanded(
             child: guidesAsync.when(
-              loading: () =>
-                  const Center(child: CircularProgressIndicator()),
+              loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => Center(child: Text('Erreur: $e')),
               data: (guides) {
                 final filtered = _selectedCategory != null
                     ? guides
-                        .where((g) => g.category == _selectedCategory)
-                        .toList()
+                          .where((g) => g.category == _selectedCategory)
+                          .toList()
                     : guides;
 
                 if (filtered.isEmpty) {
@@ -87,8 +85,11 @@ class _GuidesScreenState extends ConsumerState<GuidesScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.menu_book_outlined,
-                            size: 64, color: AppColors.textTertiary),
+                        Icon(
+                          Icons.menu_book_outlined,
+                          size: 64,
+                          color: AppColors.textTertiary,
+                        ),
                         SizedBox(height: 16),
                         Text('Aucun guide trouvé'),
                       ],
@@ -115,27 +116,32 @@ class _GuidesScreenState extends ConsumerState<GuidesScreen> {
                             const SizedBox(height: 8),
                             Row(
                               children: [
-                                Icon(Icons.timer_outlined,
-                                    size: 14, color: AppColors.textTertiary),
+                                Icon(
+                                  Icons.timer_outlined,
+                                  size: 14,
+                                  color: AppColors.textTertiary,
+                                ),
                                 const SizedBox(width: 4),
                                 Text(
                                   '${guide.duration} min',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 const SizedBox(width: 16),
-                                ...guide.platforms.map((p) => Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 4),
-                                      child: Chip(
-                                        label: Text(p,
-                                            style:
-                                                const TextStyle(fontSize: 10)),
-                                        padding: EdgeInsets.zero,
-                                        materialTapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        visualDensity: VisualDensity.compact,
+                                ...guide.platforms.map(
+                                  (p) => Padding(
+                                    padding: const EdgeInsets.only(right: 4),
+                                    child: Chip(
+                                      label: Text(
+                                        p,
+                                        style: const TextStyle(fontSize: 10),
                                       ),
-                                    )),
+                                      padding: EdgeInsets.zero,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      visualDensity: VisualDensity.compact,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ],

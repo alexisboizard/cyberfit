@@ -51,28 +51,27 @@ class UserModel {
       level: data['level'] ?? 'beginner',
       badges: List<String>.from(data['badges'] ?? []),
       onboardingCompleted: data['onboardingCompleted'] ?? false,
-      lastActiveDate:
-          (data['lastActiveDate'] as Timestamp?)?.toDate(),
-      scoreBreakdown:
-          Map<String, int>.from(data['scoreBreakdown'] ?? {}),
+      lastActiveDate: (data['lastActiveDate'] as Timestamp?)?.toDate(),
+      scoreBreakdown: Map<String, int>.from(data['scoreBreakdown'] ?? {}),
     );
   }
 
   Map<String, dynamic> toFirestore() => {
-        'email': email,
-        'displayName': displayName,
-        'createdAt': Timestamp.fromDate(createdAt),
-        'currentScore': currentScore,
-        'currentStreak': currentStreak,
-        'longestStreak': longestStreak,
-        'totalPoints': totalPoints,
-        'level': level,
-        'badges': badges,
-        'onboardingCompleted': onboardingCompleted,
-        'lastActiveDate':
-            lastActiveDate != null ? Timestamp.fromDate(lastActiveDate!) : null,
-        'scoreBreakdown': scoreBreakdown,
-      };
+    'email': email,
+    'displayName': displayName,
+    'createdAt': Timestamp.fromDate(createdAt),
+    'currentScore': currentScore,
+    'currentStreak': currentStreak,
+    'longestStreak': longestStreak,
+    'totalPoints': totalPoints,
+    'level': level,
+    'badges': badges,
+    'onboardingCompleted': onboardingCompleted,
+    'lastActiveDate': lastActiveDate != null
+        ? Timestamp.fromDate(lastActiveDate!)
+        : null,
+    'scoreBreakdown': scoreBreakdown,
+  };
 
   UserModel copyWith({
     String? displayName,
@@ -85,20 +84,19 @@ class UserModel {
     bool? onboardingCompleted,
     DateTime? lastActiveDate,
     Map<String, int>? scoreBreakdown,
-  }) =>
-      UserModel(
-        uid: uid,
-        email: email,
-        displayName: displayName ?? this.displayName,
-        createdAt: createdAt,
-        currentScore: currentScore ?? this.currentScore,
-        currentStreak: currentStreak ?? this.currentStreak,
-        longestStreak: longestStreak ?? this.longestStreak,
-        totalPoints: totalPoints ?? this.totalPoints,
-        level: level ?? this.level,
-        badges: badges ?? this.badges,
-        onboardingCompleted: onboardingCompleted ?? this.onboardingCompleted,
-        lastActiveDate: lastActiveDate ?? this.lastActiveDate,
-        scoreBreakdown: scoreBreakdown ?? this.scoreBreakdown,
-      );
+  }) => UserModel(
+    uid: uid,
+    email: email,
+    displayName: displayName ?? this.displayName,
+    createdAt: createdAt,
+    currentScore: currentScore ?? this.currentScore,
+    currentStreak: currentStreak ?? this.currentStreak,
+    longestStreak: longestStreak ?? this.longestStreak,
+    totalPoints: totalPoints ?? this.totalPoints,
+    level: level ?? this.level,
+    badges: badges ?? this.badges,
+    onboardingCompleted: onboardingCompleted ?? this.onboardingCompleted,
+    lastActiveDate: lastActiveDate ?? this.lastActiveDate,
+    scoreBreakdown: scoreBreakdown ?? this.scoreBreakdown,
+  );
 }

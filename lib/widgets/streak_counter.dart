@@ -22,19 +22,16 @@ class StreakCounter extends StatelessWidget {
             Text(
               '$streak',
               style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    color: streak > 0 ? AppColors.streak : AppColors.textTertiary,
-                    fontWeight: FontWeight.w700,
-                  ),
+                color: streak > 0 ? AppColors.streak : AppColors.textTertiary,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             Text(
               streak <= 1 ? 'jour' : 'jours',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 4),
-            Text(
-              'Streak',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
+            Text('Streak', style: Theme.of(context).textTheme.labelMedium),
           ],
         ),
       ),

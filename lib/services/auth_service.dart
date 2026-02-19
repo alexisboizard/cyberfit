@@ -12,14 +12,12 @@ class AuthService {
   Future<UserCredential> signInWithEmail({
     required String email,
     required String password,
-  }) =>
-      _auth.signInWithEmailAndPassword(email: email, password: password);
+  }) => _auth.signInWithEmailAndPassword(email: email, password: password);
 
   Future<UserCredential> registerWithEmail({
     required String email,
     required String password,
-  }) =>
-      _auth.createUserWithEmailAndPassword(email: email, password: password);
+  }) => _auth.createUserWithEmailAndPassword(email: email, password: password);
 
   Future<UserCredential?> signInWithGoogle() async {
     final googleUser = await _googleSignIn.signIn();
@@ -35,10 +33,7 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    await Future.wait([
-      _auth.signOut(),
-      _googleSignIn.signOut(),
-    ]);
+    await Future.wait([_auth.signOut(), _googleSignIn.signOut()]);
   }
 
   Future<void> sendPasswordReset(String email) =>

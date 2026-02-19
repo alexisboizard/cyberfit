@@ -30,10 +30,10 @@ class BadgeModel {
   }
 
   Map<String, dynamic> toFirestore() => {
-        'name': name,
-        'description': description,
-        'iconUrl': iconUrl,
-        'condition': condition,
-        'rarity': rarity,
-      };
+    'name': name,
+    'description': description,
+    'iconUrl': iconUrl,
+    'condition': condition,
+    'rarity': rarity,
+  };
 }

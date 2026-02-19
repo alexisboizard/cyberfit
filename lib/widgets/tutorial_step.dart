@@ -48,13 +48,10 @@ class _TutorialStepWidgetState extends State<TutorialStepWidget> {
                   ),
                   child: Center(
                     child: _completed
-                        ? const Icon(Icons.check,
-                            color: Colors.white, size: 18)
+                        ? const Icon(Icons.check, color: Colors.white, size: 18)
                         : Text(
                             '${widget.stepNumber}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
+                            style: Theme.of(context).textTheme.labelMedium
                                 ?.copyWith(color: AppColors.textSecondary),
                           ),
                   ),
@@ -78,13 +75,11 @@ class _TutorialStepWidgetState extends State<TutorialStepWidget> {
                 Text(
                   widget.text,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        decoration: _completed
-                            ? TextDecoration.lineThrough
-                            : null,
-                        color: _completed
-                            ? AppColors.textTertiary
-                            : AppColors.textPrimary,
-                      ),
+                    decoration: _completed ? TextDecoration.lineThrough : null,
+                    color: _completed
+                        ? AppColors.textTertiary
+                        : AppColors.textPrimary,
+                  ),
                 ),
                 if (widget.imageUrl != null) ...[
                   const SizedBox(height: 8),

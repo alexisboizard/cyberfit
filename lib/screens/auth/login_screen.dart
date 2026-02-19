@@ -50,11 +50,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 const SizedBox(height: 48),
                 // Logo/Title
-                Icon(
-                  Icons.shield,
-                  size: 64,
-                  color: AppColors.primary,
-                ),
+                Icon(Icons.shield, size: 64, color: AppColors.primary),
                 const SizedBox(height: 16),
                 Text(
                   'CyberFit',
@@ -176,7 +172,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _signIn() {
     if (!_formKey.currentState!.validate()) return;
-    ref.read(authNotifierProvider.notifier).signInWithEmail(
+    ref
+        .read(authNotifierProvider.notifier)
+        .signInWithEmail(
           _emailController.text.trim(),
           _passwordController.text,
         );

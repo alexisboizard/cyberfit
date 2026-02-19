@@ -19,6 +19,6 @@ final dailyChallengeProvider = FutureProvider<ChallengeModel?>((ref) async {
 
 final challengesByCategoryProvider =
     FutureProvider.family<List<ChallengeModel>, String>((ref, category) async {
-  final challenges = await ref.watch(challengesProvider.future);
-  return challenges.where((c) => c.category == category).toList();
-});
+      final challenges = await ref.watch(challengesProvider.future);
+      return challenges.where((c) => c.category == category).toList();
+    });

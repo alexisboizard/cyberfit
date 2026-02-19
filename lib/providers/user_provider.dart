@@ -17,13 +17,16 @@ final userStreamProvider = StreamProvider<UserModel?>((ref) {
   );
 });
 
-final completedChallengesProvider =
-    FutureProvider<List<CompletedChallenge>>((ref) {
+final completedChallengesProvider = FutureProvider<List<CompletedChallenge>>((
+  ref,
+) {
   final authState = ref.watch(authStateProvider);
   return authState.when(
     data: (user) {
       if (user == null) return Future.value([]);
-      return ref.watch(firestoreServiceProvider).getCompletedChallenges(user.uid);
+      return ref
+          .watch(firestoreServiceProvider)
+          .getCompletedChallenges(user.uid);
     },
     loading: () => Future.value([]),
     error: (_, __) => Future.value([]),
@@ -64,8 +67,9 @@ class UserActions {
       'totalPoints': newPoints,
       'level': newLevel,
       'currentStreak': newStreak,
-      'longestStreak':
-          newStreak > currentUser.longestStreak ? newStreak : currentUser.longestStreak,
+      'longestStreak': newStreak > currentUser.longestStreak
+          ? newStreak
+          : currentUser.longestStreak,
       'lastActiveDate': Timestamp.now(),
     });
   }
@@ -97,8 +101,7 @@ class UserActions {
     final user = _ref.read(authStateProvider).value;
     if (user == null) return;
 
-    final totalScore =
-        scoreBreakdown.values.fold<int>(0, (sum, v) => sum + v);
+    final totalScore = scoreBreakdown.values.fold<int>(0, (sum, v) => sum + v);
 
     await _ref.read(firestoreServiceProvider).updateUser(user.uid, {
       'scoreBreakdown': scoreBreakdown,

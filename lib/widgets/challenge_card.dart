@@ -7,11 +7,7 @@ class ChallengeCard extends StatelessWidget {
   final ChallengeModel challenge;
   final VoidCallback? onTap;
 
-  const ChallengeCard({
-    super.key,
-    required this.challenge,
-    this.onTap,
-  });
+  const ChallengeCard({super.key, required this.challenge, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +34,8 @@ class ChallengeCard extends StatelessWidget {
                     AppConstants.categoryLabels[challenge.category] ??
                         challenge.category,
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: _categoryColor(challenge.category),
-                        ),
+                      color: _categoryColor(challenge.category),
+                    ),
                   ),
                   const Spacer(),
                   _DifficultyBadge(difficulty: challenge.difficulty),
@@ -67,23 +63,29 @@ class ChallengeCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      Icon(Icons.timer_outlined,
-                          size: 16, color: AppColors.textTertiary),
+                      Icon(
+                        Icons.timer_outlined,
+                        size: 16,
+                        color: AppColors.textTertiary,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         '${challenge.estimatedMinutes} min',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const SizedBox(width: 16),
-                      Icon(Icons.stars_outlined,
-                          size: 16, color: AppColors.accent),
+                      Icon(
+                        Icons.stars_outlined,
+                        size: 16,
+                        color: AppColors.accent,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         '+${challenge.points} pts',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.accent,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          color: AppColors.accent,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       const Spacer(),
                       FilledButton.tonal(
