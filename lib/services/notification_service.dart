@@ -55,6 +55,7 @@ class NotificationService {
       'Votre défi cyber du jour vous attend ! 🛡️',
       RepeatInterval.daily,
       details,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
   }
 

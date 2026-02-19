@@ -21,7 +21,7 @@ class BadgeItem extends StatelessWidget {
             height: 64,
             decoration: BoxDecoration(
               color: unlocked
-                  ? _rarityColor.withValues(alpha: 0.15)
+                  ? _rarityColor.withOpacity(0.15)
                   : AppColors.surfaceVariant,
               shape: BoxShape.circle,
               border: Border.all(
@@ -81,7 +81,7 @@ class BadgeItem extends StatelessWidget {
               height: 80,
               decoration: BoxDecoration(
                 color: unlocked
-                    ? _rarityColor.withValues(alpha: 0.15)
+                    ? _rarityColor.withOpacity(0.15)
                     : AppColors.surfaceVariant,
                 shape: BoxShape.circle,
               ),
@@ -98,7 +98,7 @@ class BadgeItem extends StatelessWidget {
               label: Text(
                 AppConstants.rarityLabels[badge.rarity] ?? badge.rarity,
               ),
-              backgroundColor: _rarityColor.withValues(alpha: 0.1),
+              backgroundColor: _rarityColor.withOpacity(0.1),
             ),
           ],
         ),

@@ -42,9 +42,7 @@ class ProfileScreen extends ConsumerWidget {
                   children: [
                     CircleAvatar(
                       radius: 48,
-                      backgroundColor: AppColors.primaryLight.withValues(
-                        alpha: 0.2,
-                      ),
+                      backgroundColor: AppColors.primaryLight.withOpacity(0.2),
                       child: Text(
                         user.displayName.isNotEmpty
                             ? user.displayName[0].toUpperCase()

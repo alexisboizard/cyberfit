@@ -87,7 +87,7 @@ abstract final class AppTheme {
     ),
     chipTheme: ChipThemeData(
       backgroundColor: AppColors.surfaceVariant,
-      selectedColor: AppColors.primaryLight.withValues(alpha: 0.2),
+      selectedColor: AppColors.primaryLight.withOpacity(0.2),
       labelStyle: AppTypography.textTheme.labelMedium!,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       side: BorderSide.none,

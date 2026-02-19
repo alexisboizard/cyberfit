@@ -234,7 +234,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
                 _domainLabel(question.domain),
                 style: const TextStyle(fontSize: 12),
               ),
-              backgroundColor: AppColors.primaryLight.withValues(alpha: 0.1),
+              backgroundColor: AppColors.primaryLight.withOpacity(0.1),
             ),
             const SizedBox(height: 24),
 
@@ -248,7 +248,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
                 padding: const EdgeInsets.only(bottom: 12),
                 child: Material(
                   color: isSelected
-                      ? AppColors.primary.withValues(alpha: 0.1)
+                      ? AppColors.primary.withOpacity(0.1)
                       : AppColors.surface,
                   borderRadius: BorderRadius.circular(12),
                   child: InkWell(
