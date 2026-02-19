@@ -8,11 +8,13 @@ final guidesProvider = FutureProvider<List<GuideModel>>((ref) {
 
 final guidesByCategoryProvider =
     FutureProvider.family<List<GuideModel>, String>((ref, category) {
-  return ref.watch(firestoreServiceProvider).getGuides(category: category);
-});
+      return ref.watch(firestoreServiceProvider).getGuides(category: category);
+    });
 
-final guideSearchProvider =
-    FutureProvider.family<List<GuideModel>, String>((ref, query) async {
+final guideSearchProvider = FutureProvider.family<List<GuideModel>, String>((
+  ref,
+  query,
+) async {
   final guides = await ref.watch(guidesProvider.future);
   final lowerQuery = query.toLowerCase();
   return guides.where((g) {

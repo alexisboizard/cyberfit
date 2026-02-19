@@ -40,30 +40,36 @@ class ProgressScreen extends ConsumerWidget {
                 child: RadarChart(
                   RadarChartData(
                     radarShape: RadarShape.polygon,
-                    radarBorderData:
-                        const BorderSide(color: AppColors.border, width: 1),
-                    gridBorderData:
-                        const BorderSide(color: AppColors.divider, width: 1),
-                    tickBorderData:
-                        const BorderSide(color: Colors.transparent),
+                    radarBorderData: const BorderSide(
+                      color: AppColors.border,
+                      width: 1,
+                    ),
+                    gridBorderData: const BorderSide(
+                      color: AppColors.divider,
+                      width: 1,
+                    ),
+                    tickBorderData: const BorderSide(color: Colors.transparent),
                     tickCount: 4,
                     ticksTextStyle: const TextStyle(fontSize: 0),
                     titleTextStyle: Theme.of(context).textTheme.bodySmall!,
                     getTitle: (index, angle) {
                       final domains = AppConstants.scoreDomains;
-                      if (index >= domains.length) return RadarChartTitle(text: '');
+                      if (index >= domains.length)
+                        return RadarChartTitle(text: '');
                       return RadarChartTitle(
-                        text: AppConstants.scoreDomainLabels[domains[index]] ??
+                        text:
+                            AppConstants.scoreDomainLabels[domains[index]] ??
                             domains[index],
                       );
                     },
                     dataSets: [
                       RadarDataSet(
                         dataEntries: AppConstants.scoreDomains
-                            .map((d) => RadarEntry(
-                                  value:
-                                      (user.scoreBreakdown[d] ?? 0).toDouble(),
-                                ))
+                            .map(
+                              (d) => RadarEntry(
+                                value: (user.scoreBreakdown[d] ?? 0).toDouble(),
+                              ),
+                            )
                             .toList(),
                         borderColor: AppColors.primary,
                         fillColor: AppColors.primary.withValues(alpha: 0.2),
@@ -76,10 +82,7 @@ class ProgressScreen extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Level progress
-              Text(
-                'Niveau',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              Text('Niveau', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
               Card(
                 child: Padding(
@@ -103,12 +106,14 @@ class ProgressScreen extends ConsumerWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(4),
                         child: LinearProgressIndicator(
-                          value: (user.totalPoints % AppConstants.levelThreshold) /
+                          value:
+                              (user.totalPoints % AppConstants.levelThreshold) /
                               AppConstants.levelThreshold,
                           minHeight: 10,
                           backgroundColor: AppColors.surfaceVariant,
                           valueColor: const AlwaysStoppedAnimation<Color>(
-                              AppColors.primary),
+                            AppColors.primary,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -141,8 +146,7 @@ class ProgressScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               unlockedBadgesAsync.when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Text('Erreur: $e'),
                 data: (badges) {
                   if (badges.isEmpty) {
@@ -169,14 +173,10 @@ class ProgressScreen extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Completed challenges stats
-              Text(
-                'Historique',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              Text('Historique', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
               completedAsync.when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Text('Erreur: $e'),
                 data: (completed) {
                   if (completed.isEmpty) {
@@ -199,10 +199,13 @@ class ProgressScreen extends ConsumerWidget {
                         final c = completed[index];
                         return ListTile(
                           leading: CircleAvatar(
-                            backgroundColor:
-                                AppColors.secondary.withValues(alpha: 0.1),
-                            child: const Icon(Icons.check,
-                                color: AppColors.secondary),
+                            backgroundColor: AppColors.secondary.withValues(
+                              alpha: 0.1,
+                            ),
+                            child: const Icon(
+                              Icons.check,
+                              color: AppColors.secondary,
+                            ),
                           ),
                           title: Text(c.challengeId),
                           subtitle: Text(

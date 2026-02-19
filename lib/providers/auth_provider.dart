@@ -13,8 +13,8 @@ final authStateProvider = StreamProvider<User?>((ref) {
 
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<void>>((ref) {
-  return AuthNotifier(ref);
-});
+      return AuthNotifier(ref);
+    });
 
 class AuthNotifier extends StateNotifier<AsyncValue<void>> {
   final Ref _ref;
@@ -43,12 +43,14 @@ class AuthNotifier extends StateNotifier<AsyncValue<void>> {
         password: password,
       );
       final user = credential.user!;
-      await _firestore.createUser(UserModel(
-        uid: user.uid,
-        email: email,
-        displayName: displayName,
-        createdAt: DateTime.now(),
-      ));
+      await _firestore.createUser(
+        UserModel(
+          uid: user.uid,
+          email: email,
+          displayName: displayName,
+          createdAt: DateTime.now(),
+        ),
+      );
     });
   }
 
@@ -61,12 +63,14 @@ class AuthNotifier extends StateNotifier<AsyncValue<void>> {
       final user = credential.user!;
       final existing = await _firestore.getUser(user.uid);
       if (existing == null) {
-        await _firestore.createUser(UserModel(
-          uid: user.uid,
-          email: user.email ?? '',
-          displayName: user.displayName ?? '',
-          createdAt: DateTime.now(),
-        ));
+        await _firestore.createUser(
+          UserModel(
+            uid: user.uid,
+            email: user.email ?? '',
+            displayName: user.displayName ?? '',
+            createdAt: DateTime.now(),
+          ),
+        );
       }
     });
   }
@@ -77,5 +81,6 @@ class AuthNotifier extends StateNotifier<AsyncValue<void>> {
   }
 }
 
-final firestoreServiceProvider =
-    Provider<FirestoreService>((ref) => FirestoreService());
+final firestoreServiceProvider = Provider<FirestoreService>(
+  (ref) => FirestoreService(),
+);

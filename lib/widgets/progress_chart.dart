@@ -6,11 +6,7 @@ class ProgressChart extends StatelessWidget {
   final List<double> values;
   final List<String> labels;
 
-  const ProgressChart({
-    super.key,
-    required this.values,
-    required this.labels,
-  });
+  const ProgressChart({super.key, required this.values, required this.labels});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +18,8 @@ class ProgressChart extends StatelessWidget {
             show: true,
             drawVerticalLine: false,
             horizontalInterval: 25,
-            getDrawingHorizontalLine: (value) => FlLine(
-              color: AppColors.divider,
-              strokeWidth: 1,
-            ),
+            getDrawingHorizontalLine: (value) =>
+                FlLine(color: AppColors.divider, strokeWidth: 1),
           ),
           titlesData: FlTitlesData(
             leftTitles: AxisTitles(
@@ -62,10 +56,12 @@ class ProgressChart extends StatelessWidget {
                 },
               ),
             ),
-            topTitles:
-                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles:
-                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            rightTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
           ),
           borderData: FlBorderData(show: false),
           minX: 0,

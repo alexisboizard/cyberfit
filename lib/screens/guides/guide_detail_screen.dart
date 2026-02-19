@@ -34,25 +34,29 @@ class GuideDetailScreen extends ConsumerWidget {
         firestore.incrementGuideViews(guideId);
 
         return Scaffold(
-          appBar: AppBar(
-            title: Text(guide.title),
-          ),
+          appBar: AppBar(title: Text(guide.title)),
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
               // Meta info
               Row(
                 children: [
-                  Icon(Icons.timer_outlined,
-                      size: 16, color: AppColors.textTertiary),
+                  Icon(
+                    Icons.timer_outlined,
+                    size: 16,
+                    color: AppColors.textTertiary,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     '${guide.duration} min',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(width: 16),
-                  Icon(Icons.visibility_outlined,
-                      size: 16, color: AppColors.textTertiary),
+                  Icon(
+                    Icons.visibility_outlined,
+                    size: 16,
+                    color: AppColors.textTertiary,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     '${guide.views} vues',

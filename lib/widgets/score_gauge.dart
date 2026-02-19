@@ -5,11 +5,7 @@ class ScoreGauge extends StatelessWidget {
   final int score;
   final double size;
 
-  const ScoreGauge({
-    super.key,
-    required this.score,
-    this.size = 120,
-  });
+  const ScoreGauge({super.key, required this.score, this.size = 120});
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +35,11 @@ class ScoreGauge extends StatelessWidget {
                     children: [
                       Text(
                         '$score',
-                        style:
-                            Theme.of(context).textTheme.displaySmall?.copyWith(
-                                  color: _scoreColor,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                        style: Theme.of(context).textTheme.displaySmall
+                            ?.copyWith(
+                              color: _scoreColor,
+                              fontWeight: FontWeight.w700,
+                            ),
                       ),
                       Text(
                         '/100',
@@ -55,10 +51,7 @@ class ScoreGauge extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              'Score cyber',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
+            Text('Score cyber', style: Theme.of(context).textTheme.labelMedium),
           ],
         ),
       ),

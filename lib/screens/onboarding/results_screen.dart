@@ -50,9 +50,7 @@ class ResultsScreen extends ConsumerWidget {
                       children: [
                         Text(
                           '$totalScore',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayLarge
+                          style: Theme.of(context).textTheme.displayLarge
                               ?.copyWith(
                                 color: _scoreColor(totalScore),
                                 fontWeight: FontWeight.w700,
@@ -149,9 +147,9 @@ class _DomainScore extends StatelessWidget {
               ),
               Text(
                 '$score/$maxScore',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -162,9 +160,7 @@ class _DomainScore extends StatelessWidget {
               value: ratio,
               minHeight: 8,
               backgroundColor: AppColors.surfaceVariant,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                _domainColor(domain),
-              ),
+              valueColor: AlwaysStoppedAnimation<Color>(_domainColor(domain)),
             ),
           ),
         ],

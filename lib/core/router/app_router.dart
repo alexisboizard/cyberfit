@@ -26,7 +26,8 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/home',
     redirect: (context, state) {
       final isLoggedIn = authState.valueOrNull != null;
-      final isAuthRoute = state.matchedLocation == '/login' ||
+      final isAuthRoute =
+          state.matchedLocation == '/login' ||
           state.matchedLocation == '/register';
 
       if (!isLoggedIn && !isAuthRoute) return '/login';
@@ -51,10 +52,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
     routes: [
       // Auth routes
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginScreen(),
-      ),
+      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/register',
         builder: (context, state) => const RegisterScreen(),
@@ -84,27 +82,23 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: '/home',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: HomeScreen(),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: HomeScreen()),
           ),
           GoRoute(
             path: '/progress',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: ProgressScreen(),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: ProgressScreen()),
           ),
           GoRoute(
             path: '/guides',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: GuidesScreen(),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: GuidesScreen()),
           ),
           GoRoute(
             path: '/profile',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: ProfileScreen(),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: ProfileScreen()),
           ),
         ],
       ),

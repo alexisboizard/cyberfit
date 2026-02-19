@@ -34,21 +34,19 @@ class FirestoreService {
   // --- Completed Challenges ---
 
   CollectionReference<Map<String, dynamic>> _completedChallenges(String uid) =>
-      _userDoc(uid)
-          .collection(AppConstants.completedChallengesSubcollection);
+      _userDoc(uid).collection(AppConstants.completedChallengesSubcollection);
 
   Future<void> addCompletedChallenge(
     String uid,
     CompletedChallenge completed,
-  ) =>
-      _completedChallenges(uid)
-          .doc(completed.challengeId)
-          .set(completed.toFirestore());
+  ) => _completedChallenges(
+    uid,
+  ).doc(completed.challengeId).set(completed.toFirestore());
 
   Future<List<CompletedChallenge>> getCompletedChallenges(String uid) async {
-    final snapshot = await _completedChallenges(uid)
-        .orderBy('completedAt', descending: true)
-        .get();
+    final snapshot = await _completedChallenges(
+      uid,
+    ).orderBy('completedAt', descending: true).get();
     return snapshot.docs.map(CompletedChallenge.fromFirestore).toList();
   }
 
@@ -60,8 +58,9 @@ class FirestoreService {
   // --- Challenges ---
 
   Future<List<ChallengeModel>> getChallenges({bool activeOnly = true}) async {
-    Query<Map<String, dynamic>> query =
-        _db.collection(AppConstants.challengesCollection);
+    Query<Map<String, dynamic>> query = _db.collection(
+      AppConstants.challengesCollection,
+    );
     if (activeOnly) {
       query = query.where('isActive', isEqualTo: true);
     }
@@ -70,8 +69,10 @@ class FirestoreService {
   }
 
   Future<ChallengeModel?> getChallenge(String id) async {
-    final doc =
-        await _db.collection(AppConstants.challengesCollection).doc(id).get();
+    final doc = await _db
+        .collection(AppConstants.challengesCollection)
+        .doc(id)
+        .get();
     if (!doc.exists) return null;
     return ChallengeModel.fromFirestore(doc);
   }
@@ -79,8 +80,7 @@ class FirestoreService {
   // --- Badges ---
 
   Future<List<BadgeModel>> getBadges() async {
-    final snapshot =
-        await _db.collection(AppConstants.badgesCollection).get();
+    final snapshot = await _db.collection(AppConstants.badgesCollection).get();
     return snapshot.docs.map(BadgeModel.fromFirestore).toList();
   }
 
@@ -90,8 +90,9 @@ class FirestoreService {
     String? category,
     String? platform,
   }) async {
-    Query<Map<String, dynamic>> query =
-        _db.collection(AppConstants.guidesCollection);
+    Query<Map<String, dynamic>> query = _db.collection(
+      AppConstants.guidesCollection,
+    );
     if (category != null) {
       query = query.where('category', isEqualTo: category);
     }
@@ -103,14 +104,16 @@ class FirestoreService {
   }
 
   Future<GuideModel?> getGuide(String id) async {
-    final doc =
-        await _db.collection(AppConstants.guidesCollection).doc(id).get();
+    final doc = await _db
+        .collection(AppConstants.guidesCollection)
+        .doc(id)
+        .get();
     if (!doc.exists) return null;
     return GuideModel.fromFirestore(doc);
   }
 
-  Future<void> incrementGuideViews(String id) =>
-      _db.collection(AppConstants.guidesCollection).doc(id).update({
-        'views': FieldValue.increment(1),
-      });
+  Future<void> incrementGuideViews(String id) => _db
+      .collection(AppConstants.guidesCollection)
+      .doc(id)
+      .update({'views': FieldValue.increment(1)});
 }

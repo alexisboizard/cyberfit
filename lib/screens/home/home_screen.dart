@@ -58,15 +58,10 @@ class HomeScreen extends ConsumerWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: ScoreGauge(
-                        score: user.currentScore,
-                        size: 100,
-                      ),
+                      child: ScoreGauge(score: user.currentScore, size: 100),
                     ),
                     const SizedBox(width: 16),
-                    Expanded(
-                      child: StreakCounter(streak: user.currentStreak),
-                    ),
+                    Expanded(child: StreakCounter(streak: user.currentStreak)),
                   ],
                 ),
                 const SizedBox(height: 24),
@@ -76,10 +71,7 @@ class HomeScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        AppColors.primary,
-                        AppColors.primaryDark,
-                      ],
+                      colors: [AppColors.primary, AppColors.primaryDark],
                     ),
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -94,29 +86,22 @@ class HomeScreen extends ConsumerWidget {
                             Text(
                               AppConstants.levelLabels[user.level] ??
                                   'Débutant',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
+                              style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(color: Colors.white),
                             ),
                             Text(
                               '${user.totalPoints} points',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: Colors.white70,
-                                  ),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.white70),
                             ),
                           ],
                         ),
                       ),
                       Text(
                         '${user.totalPoints % AppConstants.levelThreshold}/${AppConstants.levelThreshold}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: Colors.white70),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(color: Colors.white70),
                       ),
                     ],
                   ),
@@ -213,9 +198,9 @@ class _StatCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 value,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: color,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineMedium?.copyWith(color: color),
               ),
               Text(label, style: Theme.of(context).textTheme.bodySmall),
             ],
