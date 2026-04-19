@@ -82,6 +82,11 @@ abstract final class AppConstants {
   static const freeBadgesLimit = 5;
   static const freeGuidesLimit = 10;
 
+  // RevenueCat (replace with real keys before publishing)
+  static const revenueCatAppleApiKey = 'your_apple_api_key';
+  static const revenueCatGoogleApiKey = 'your_google_api_key';
+  static const premiumEntitlementId = 'premium';
+
   // Firestore collections
   static const usersCollection = 'users';
   static const challengesCollection = 'challenges';

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/app_constants.dart';
+import '../../main.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/badge_provider.dart';
+import '../../providers/purchase_provider.dart';
+import '../../services/notification_service.dart';
 import '../../widgets/badge_item.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -72,6 +78,28 @@ class ProfileScreen extends ConsumerWidget {
                   ],
                 ),
               ),
+              // Premium badge
+              if (ref.watch(isPremiumProvider))
+                const Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Chip(
+                    avatar: Icon(Icons.workspace_premium, size: 16, color: AppColors.gold),
+                    label: Text('Premium'),
+                    backgroundColor: Color(0x1AFFD700),
+                  ),
+                ),
+              if (!ref.watch(isPremiumProvider))
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: FilledButton.icon(
+                    onPressed: () => context.push('/premium'),
+                    icon: const Icon(Icons.workspace_premium),
+                    label: const Text('Passer Premium'),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.gold,
+                    ),
+                  ),
+                ),
               const SizedBox(height: 24),
 
               // Stats grid
@@ -169,7 +197,7 @@ class ProfileScreen extends ConsumerWidget {
   void _showSettings(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
       context: context,
-      builder: (context) => SafeArea(
+      builder: (ctx) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -177,19 +205,45 @@ class ProfileScreen extends ConsumerWidget {
               leading: const Icon(Icons.notifications_outlined),
               title: const Text('Notifications'),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(ctx);
+                _showNotificationSettings(context, ref);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.workspace_premium_outlined),
+              title: const Text('CyberFit Premium'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.pop(ctx);
+                context.push('/premium');
+              },
             ),
             ListTile(
               leading: const Icon(Icons.privacy_tip_outlined),
               title: const Text('Politique de confidentialité'),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(ctx);
+                launchUrl(Uri.parse('https://cyberfit.app/privacy'));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.info_outline),
               title: const Text('À propos'),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.pop(context),
+              onTap: () async {
+                Navigator.pop(ctx);
+                final info = await PackageInfo.fromPlatform();
+                if (!context.mounted) return;
+                showAboutDialog(
+                  context: context,
+                  applicationName: AppConstants.appName,
+                  applicationVersion: '${info.version} (${info.buildNumber})',
+                  applicationLegalese:
+                      '© ${DateTime.now().year} CyberFit. Tous droits réservés.',
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.delete_outline, color: AppColors.error),
@@ -197,10 +251,108 @@ class ProfileScreen extends ConsumerWidget {
                 'Supprimer mon compte',
                 style: TextStyle(color: AppColors.error),
               ),
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(ctx);
+                _confirmDeleteAccount(context, ref);
+              },
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showNotificationSettings(BuildContext context, WidgetRef ref) {
+    final storage = ref.read(storageServiceProvider);
+    var enabled = storage.notificationsEnabled;
+    var hour = storage.reminderHour;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => AlertDialog(
+          title: const Text('Notifications'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SwitchListTile(
+                title: const Text('Rappel quotidien'),
+                value: enabled,
+                onChanged: (v) => setState(() => enabled = v),
+              ),
+              if (enabled)
+                ListTile(
+                  title: const Text('Heure du rappel'),
+                  trailing: Text('${hour.toString().padLeft(2, '0')}:00'),
+                  onTap: () async {
+                    final time = await showTimePicker(
+                      context: ctx,
+                      initialTime: TimeOfDay(hour: hour, minute: 0),
+                    );
+                    if (time != null) {
+                      setState(() => hour = time.hour);
+                    }
+                  },
+                ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Annuler'),
+            ),
+            FilledButton(
+              onPressed: () async {
+                await storage.setNotificationsEnabled(enabled);
+                await storage.setReminderHour(hour);
+                if (enabled) {
+                  await NotificationService.scheduleDailyReminder(
+                    hour: hour,
+                    minute: 0,
+                  );
+                } else {
+                  await NotificationService.cancelAll();
+                }
+                if (ctx.mounted) Navigator.pop(ctx);
+              },
+              child: const Text('Enregistrer'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _confirmDeleteAccount(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Supprimer mon compte'),
+        content: const Text(
+          'Cette action est irréversible. Toutes vos données seront supprimées.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Annuler'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
+            onPressed: () async {
+              Navigator.pop(ctx);
+              try {
+                await ref.read(authServiceProvider).deleteAccount();
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Erreur: $e')),
+                  );
+                }
+              }
+            },
+            child: const Text('Supprimer'),
+          ),
+        ],
       ),
     );
   }

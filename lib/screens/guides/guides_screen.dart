@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/app_constants.dart';
 import '../../providers/guide_provider.dart';
+import '../../providers/purchase_provider.dart';
 
 class GuidesScreen extends ConsumerStatefulWidget {
   const GuidesScreen({super.key});
@@ -97,18 +98,25 @@ class _GuidesScreenState extends ConsumerState<GuidesScreen> {
                   );
                 }
 
+                final isPremium = ref.watch(isPremiumProvider);
+                final freeLimit = AppConstants.freeGuidesLimit;
+
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: filtered.length,
                   itemBuilder: (context, index) {
                     final guide = filtered[index];
+                    final isLocked = !isPremium && index >= freeLimit;
+
                     return Card(
                       margin: const EdgeInsets.only(bottom: 12),
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(16),
                         title: Text(
                           guide.title,
-                          style: Theme.of(context).textTheme.titleSmall,
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                color: isLocked ? AppColors.textTertiary : null,
+                              ),
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,8 +154,16 @@ class _GuidesScreenState extends ConsumerState<GuidesScreen> {
                             ),
                           ],
                         ),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => context.push('/guide/${guide.id}'),
+                        trailing: isLocked
+                            ? const Icon(Icons.lock, color: AppColors.gold)
+                            : const Icon(Icons.chevron_right),
+                        onTap: () {
+                          if (isLocked) {
+                            context.push('/premium');
+                          } else {
+                            context.push('/guide/${guide.id}');
+                          }
+                        },
                       ),
                     );
                   },

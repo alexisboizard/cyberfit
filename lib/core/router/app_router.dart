@@ -13,6 +13,8 @@ import '../../screens/progress/progress_screen.dart';
 import '../../screens/guides/guides_screen.dart';
 import '../../screens/guides/guide_detail_screen.dart';
 import '../../screens/profile/profile_screen.dart';
+import '../../screens/challenge/challenge_detail_screen.dart';
+import '../../screens/premium/paywall_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -103,7 +105,22 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
 
+      // Premium
+      GoRoute(
+        path: '/premium',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const PaywallScreen(),
+      ),
+
       // Detail routes (outside shell for full screen)
+      GoRoute(
+        path: '/challenge/:id',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return ChallengeDetailScreen(challengeId: id);
+        },
+      ),
       GoRoute(
         path: '/guide/:id',
         parentNavigatorKey: _rootNavigatorKey,

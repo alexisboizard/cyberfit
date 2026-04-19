@@ -643,6 +643,344 @@ const _challenges = [
       },
     ],
   },
+
+  // --- Mots de passe (supplémentaires) ---
+  {
+    'id': 'pwd_haveibeenpwned',
+    'title': 'Vérifier si vos comptes ont été piratés',
+    'description':
+        'Utilisez Have I Been Pwned pour savoir si vos identifiants ont fuité.',
+    'category': 'passwords',
+    'difficulty': 'easy',
+    'points': 10,
+    'estimatedMinutes': 5,
+    'isActive': true,
+    'order': 19,
+    'tutorialSteps': [
+      {'stepNumber': 1, 'text': 'Rendez-vous sur haveibeenpwned.com.'},
+      {'stepNumber': 2, 'text': 'Entrez votre adresse email principale.'},
+      {
+        'stepNumber': 3,
+        'text':
+            'Si des fuites sont détectées, changez immédiatement les mots de passe des comptes concernés.',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Répétez pour toutes vos adresses email (pro, perso, anciennes).',
+      },
+    ],
+  },
+  {
+    'id': 'pwd_passphrase',
+    'title': 'Créer une phrase de passe mémorable',
+    'description':
+        'Apprenez la technique Diceware pour créer des mots de passe impossibles à craquer mais faciles à retenir.',
+    'category': 'passwords',
+    'difficulty': 'medium',
+    'points': 25,
+    'estimatedMinutes': 10,
+    'isActive': true,
+    'order': 20,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'La méthode Diceware : lancez un dé 5 fois pour obtenir un nombre à 5 chiffres, puis cherchez le mot correspondant dans la liste Diceware.',
+      },
+      {
+        'stepNumber': 2,
+        'text':
+            'Répétez pour obtenir 5-6 mots. Ex : "correct cheval batterie agrafe".',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Cette phrase est plus sûre qu\'un mot de passe complexe de 8 caractères tout en étant mémorisable.',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Utilisez cette technique pour votre mot de passe maître (gestionnaire de mots de passe, email principal).',
+      },
+    ],
+  },
+
+  // --- Authentification (supplémentaires) ---
+  {
+    'id': 'auth_security_keys',
+    'title': 'Découvrir les clés de sécurité physiques',
+    'description':
+        'Apprenez ce qu\'est une clé YubiKey et pourquoi c\'est le niveau ultime de protection.',
+    'category': 'authentication',
+    'difficulty': 'hard',
+    'points': 50,
+    'estimatedMinutes': 15,
+    'isActive': true,
+    'order': 21,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'Une clé de sécurité (YubiKey, Google Titan) est un dispositif physique USB/NFC qui remplace les codes SMS ou TOTP.',
+      },
+      {
+        'stepNumber': 2,
+        'text':
+            'Avantage : impossible à phisher, contrairement aux codes par SMS ou email.',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Configurez-la sur vos comptes critiques : Google, Microsoft, GitHub, réseaux sociaux.',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Astuce : achetez toujours 2 clés (une principale + une de secours rangée en lieu sûr).',
+      },
+    ],
+  },
+
+  // --- Réseaux sociaux (supplémentaires) ---
+  {
+    'id': 'social_tiktok_privacy',
+    'title': 'Paramètres de confidentialité TikTok',
+    'description':
+        'Configurez TikTok pour limiter qui peut voir votre contenu et vous contacter.',
+    'category': 'social',
+    'difficulty': 'easy',
+    'points': 10,
+    'estimatedMinutes': 5,
+    'isActive': true,
+    'order': 22,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'Ouvrez TikTok > Profil > Menu (≡) > Paramètres et confidentialité.',
+      },
+      {
+        'stepNumber': 2,
+        'text': 'Activez le compte privé si vous ne souhaitez pas être public.',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Limitez qui peut commenter, envoyer des messages et faire des duos avec vos vidéos.',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Désactivez la personnalisation des publicités dans Confidentialité > Publicités.',
+      },
+    ],
+  },
+  {
+    'id': 'social_data_download',
+    'title': 'Télécharger vos données personnelles',
+    'description':
+        'Demandez une copie de toutes les données que les réseaux sociaux détiennent sur vous.',
+    'category': 'social',
+    'difficulty': 'medium',
+    'points': 25,
+    'estimatedMinutes': 10,
+    'isActive': true,
+    'order': 23,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'Sur chaque réseau social, cherchez "Télécharger mes données" ou "Vos informations" dans les paramètres.',
+      },
+      {
+        'stepNumber': 2,
+        'text':
+            'Google : myaccount.google.com > Données et confidentialité > Télécharger vos données.',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Facebook : Paramètres > Vos informations > Télécharger vos informations.',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Analysez ce qui est stocké. Vous serez surpris par la quantité de données collectées.',
+      },
+    ],
+  },
+
+  // --- Emails (supplémentaires) ---
+  {
+    'id': 'email_encrypted',
+    'title': 'Envoyer un email chiffré',
+    'description':
+        'Découvrez comment envoyer des emails que seul le destinataire peut lire.',
+    'category': 'email',
+    'difficulty': 'hard',
+    'points': 50,
+    'estimatedMinutes': 15,
+    'isActive': true,
+    'order': 24,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'Créez un compte ProtonMail (gratuit) pour envoyer des emails chiffrés de bout en bout.',
+      },
+      {
+        'stepNumber': 2,
+        'text':
+            'Envoyez un email à un autre utilisateur ProtonMail : le chiffrement est automatique.',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Pour envoyer à un email non-ProtonMail : utilisez l\'option "Protéger par mot de passe".',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Communiquez le mot de passe au destinataire par un autre canal (SMS, téléphone).',
+      },
+    ],
+  },
+
+  // --- Appareils (supplémentaires) ---
+  {
+    'id': 'device_usb_safety',
+    'title': 'Se protéger des clés USB malveillantes',
+    'description':
+        'Apprenez pourquoi vous ne devez jamais brancher une clé USB inconnue.',
+    'category': 'device',
+    'difficulty': 'easy',
+    'points': 10,
+    'estimatedMinutes': 5,
+    'isActive': true,
+    'order': 25,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'Règle d\'or : ne branchez JAMAIS une clé USB trouvée par terre, reçue en cadeau d\'un inconnu ou prêtée.',
+      },
+      {
+        'stepNumber': 2,
+        'text':
+            'Les clés USB malveillantes (Rubber Ducky, USB Killer) peuvent installer des malwares en quelques secondes.',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Si vous devez utiliser une clé USB externe, analysez-la d\'abord avec votre antivirus.',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Privilégiez le partage de fichiers par cloud (Google Drive, iCloud, WeTransfer) plutôt que par clé USB.',
+      },
+    ],
+  },
+  {
+    'id': 'device_encrypt_phone',
+    'title': 'Chiffrer votre téléphone',
+    'description':
+        'Assurez-vous que les données de votre téléphone sont illisibles en cas de vol.',
+    'category': 'device',
+    'difficulty': 'medium',
+    'points': 25,
+    'estimatedMinutes': 5,
+    'isActive': true,
+    'order': 26,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'iPhone : le chiffrement est activé par défaut si vous avez un code de déverrouillage. Vérifiez dans Réglages > Face ID et code.',
+      },
+      {
+        'stepNumber': 2,
+        'text':
+            'Android : Paramètres > Sécurité > Chiffrement. Activez le chiffrement si ce n\'est pas fait.',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Un code à 6 chiffres minimum est indispensable pour que le chiffrement soit efficace.',
+      },
+    ],
+  },
+
+  // --- Navigation (supplémentaires) ---
+  {
+    'id': 'nav_dns_secure',
+    'title': 'Configurer un DNS sécurisé',
+    'description':
+        'Remplacez le DNS de votre opérateur par un DNS chiffré pour plus de confidentialité.',
+    'category': 'navigation',
+    'difficulty': 'medium',
+    'points': 25,
+    'estimatedMinutes': 10,
+    'isActive': true,
+    'order': 27,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'Le DNS traduit les noms de sites en adresses IP. Votre opérateur peut voir tous les sites que vous visitez.',
+      },
+      {
+        'stepNumber': 2,
+        'text':
+            'Sur iPhone : Réglages > Wi-Fi > votre réseau > Configurer le DNS > Manuel. Ajoutez 1.1.1.1 et 1.0.0.1 (Cloudflare).',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Sur Android : Paramètres > Réseau > DNS privé > Entrez "one.one.one.one".',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Alternatives : 9.9.9.9 (Quad9, bloque les domaines malveillants) ou 8.8.8.8 (Google).',
+      },
+    ],
+  },
+  {
+    'id': 'nav_password_leak_alert',
+    'title': 'Activer les alertes de fuites de mots de passe',
+    'description':
+        'Configurez votre navigateur pour vous alerter si un mot de passe enregistré a fuité.',
+    'category': 'navigation',
+    'difficulty': 'easy',
+    'points': 10,
+    'estimatedMinutes': 5,
+    'isActive': true,
+    'order': 28,
+    'tutorialSteps': [
+      {
+        'stepNumber': 1,
+        'text':
+            'Chrome : Paramètres > Confidentialité et sécurité > Vérification de sécurité > Vérifier maintenant.',
+      },
+      {
+        'stepNumber': 2,
+        'text':
+            'Safari : Préférences > Mots de passe. Les mots de passe compromis sont signalés en jaune.',
+      },
+      {
+        'stepNumber': 3,
+        'text':
+            'Firefox : about:logins > vérifiez les alertes de fuite sur chaque mot de passe enregistré.',
+      },
+      {
+        'stepNumber': 4,
+        'text':
+            'Changez immédiatement tout mot de passe signalé comme compromis.',
+      },
+    ],
+  },
 ];
 
 // ─── Badges ─────────────────────────────────────────────────────────────────

@@ -4,9 +4,11 @@ import '../../core/theme/app_colors.dart';
 import '../../core/constants/app_constants.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/challenge_provider.dart';
+import '../../providers/purchase_provider.dart';
 import '../../widgets/challenge_card.dart';
 import '../../widgets/score_gauge.dart';
 import '../../widgets/streak_counter.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -108,6 +110,69 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 24),
 
+                // Weekly challenge counter
+                Builder(builder: (context) {
+                  final remaining = ref.watch(remainingFreeChallengesProvider);
+                  final isPremium = ref.watch(isPremiumProvider);
+                  if (isPremium) return const SizedBox.shrink();
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: InkWell(
+                      onTap: () => context.push('/premium'),
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          color: remaining > 0
+                              ? AppColors.gold.withOpacity(0.08)
+                              : AppColors.error.withOpacity(0.08),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: remaining > 0
+                                ? AppColors.gold.withOpacity(0.3)
+                                : AppColors.error.withOpacity(0.3),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              remaining > 0
+                                  ? Icons.bolt
+                                  : Icons.workspace_premium,
+                              color: remaining > 0
+                                  ? AppColors.gold
+                                  : AppColors.error,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                remaining > 0
+                                    ? '$remaining défis gratuits restants cette semaine'
+                                    : 'Limite hebdomadaire atteinte',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            if (remaining <= 0)
+                              const Text(
+                                'Premium',
+                                style: TextStyle(
+                                  color: AppColors.gold,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+
                 // Daily challenge
                 Text(
                   'Défi du jour',
@@ -136,7 +201,10 @@ class HomeScreen extends ConsumerWidget {
                         ),
                       );
                     }
-                    return ChallengeCard(challenge: challenge);
+                    return ChallengeCard(
+                      challenge: challenge,
+                      onTap: () => context.push('/challenge/${challenge.id}'),
+                    );
                   },
                 ),
                 const SizedBox(height: 24),

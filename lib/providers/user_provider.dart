@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/constants/app_constants.dart';
 import '../models/user_model.dart';
 import '../models/challenge_model.dart';
+import '../models/badge_model.dart';
+import '../services/badge_service.dart';
+import '../services/notification_service.dart';
 import 'auth_provider.dart';
 
 final userStreamProvider = StreamProvider<UserModel?>((ref) {
@@ -35,18 +38,25 @@ final completedChallengesProvider = FutureProvider<List<CompletedChallenge>>((
 
 final userActionsProvider = Provider<UserActions>((ref) => UserActions(ref));
 
+final weeklyChallengeCountProvider = FutureProvider<int>((ref) async {
+  final completed = await ref.watch(completedChallengesProvider.future);
+  final now = DateTime.now();
+  final weekStart = now.subtract(Duration(days: now.weekday - 1));
+  final startOfWeek = DateTime(weekStart.year, weekStart.month, weekStart.day);
+  return completed.where((c) => c.completedAt.isAfter(startOfWeek)).length;
+});
+
 class UserActions {
   final Ref _ref;
 
   UserActions(this._ref);
 
-  Future<void> completeChallenge(ChallengeModel challenge) async {
+  Future<List<String>> completeChallenge(ChallengeModel challenge) async {
     final user = _ref.read(authStateProvider).value;
-    if (user == null) return;
+    if (user == null) return [];
 
     final firestore = _ref.read(firestoreServiceProvider);
 
-    // Save completed challenge
     final completed = CompletedChallenge(
       challengeId: challenge.id,
       completedAt: DateTime.now(),
@@ -55,13 +65,22 @@ class UserActions {
     );
     await firestore.addCompletedChallenge(user.uid, completed);
 
-    // Update user stats
     final currentUser = await firestore.getUser(user.uid);
-    if (currentUser == null) return;
+    if (currentUser == null) return [];
 
     final newPoints = currentUser.totalPoints + challenge.points;
     final newLevel = _calculateLevel(newPoints);
     final newStreak = _calculateStreak(currentUser);
+
+    // Update score breakdown
+    final domainKey = _categoryToDomain(challenge.category);
+    final updatedBreakdown = Map<String, int>.from(currentUser.scoreBreakdown);
+    if (domainKey != null) {
+      final current = updatedBreakdown[domainKey] ?? 0;
+      updatedBreakdown[domainKey] =
+          (current + (challenge.points * 20 ~/ 50)).clamp(0, 20);
+    }
+    final newScore = updatedBreakdown.values.fold<int>(0, (s, v) => s + v);
 
     await firestore.updateUser(user.uid, {
       'totalPoints': newPoints,
@@ -71,7 +90,57 @@ class UserActions {
           ? newStreak
           : currentUser.longestStreak,
       'lastActiveDate': Timestamp.now(),
+      'scoreBreakdown': updatedBreakdown,
+      'currentScore': newScore.clamp(0, 100),
     });
+
+    // Check badge unlocks
+    final allCompleted = await firestore.getCompletedChallenges(user.uid);
+    final allBadges = await firestore.getBadges();
+    final updatedUser = currentUser.copyWith(
+      totalPoints: newPoints,
+      level: newLevel,
+      currentStreak: newStreak,
+      longestStreak: newStreak > currentUser.longestStreak
+          ? newStreak
+          : currentUser.longestStreak,
+      currentScore: newScore.clamp(0, 100),
+      scoreBreakdown: updatedBreakdown,
+    );
+
+    final newBadges = BadgeService().evaluateNewBadges(
+      user: updatedUser,
+      completed: allCompleted,
+      allBadges: allBadges,
+    );
+
+    if (newBadges.isNotEmpty) {
+      final badgeIds = [
+        ...currentUser.badges,
+        ...newBadges.map((b) => b.id),
+      ];
+      await firestore.updateUser(user.uid, {'badges': badgeIds});
+
+      for (final badge in newBadges) {
+        try {
+          await NotificationService.showBadgeUnlocked(badge.name);
+        } catch (_) {}
+      }
+    }
+
+    return newBadges.map((b) => b.name).toList();
+  }
+
+  String? _categoryToDomain(String category) {
+    const mapping = {
+      'passwords': 'passwords',
+      'authentication': 'authentication',
+      'social': 'privacy',
+      'email': 'emails',
+      'device': 'devices',
+      'navigation': 'devices',
+    };
+    return mapping[category];
   }
 
   String _calculateLevel(int totalPoints) {

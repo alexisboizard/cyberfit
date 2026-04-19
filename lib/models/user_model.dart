@@ -12,6 +12,7 @@ class UserModel {
   final String level;
   final List<String> badges;
   final bool onboardingCompleted;
+  final bool isPremium;
   final DateTime? lastActiveDate;
   final Map<String, int> scoreBreakdown;
 
@@ -27,6 +28,7 @@ class UserModel {
     this.level = 'beginner',
     this.badges = const [],
     this.onboardingCompleted = false,
+    this.isPremium = false,
     this.lastActiveDate,
     this.scoreBreakdown = const {
       'passwords': 0,
@@ -51,6 +53,7 @@ class UserModel {
       level: data['level'] ?? 'beginner',
       badges: List<String>.from(data['badges'] ?? []),
       onboardingCompleted: data['onboardingCompleted'] ?? false,
+      isPremium: data['isPremium'] ?? false,
       lastActiveDate: (data['lastActiveDate'] as Timestamp?)?.toDate(),
       scoreBreakdown: Map<String, int>.from(data['scoreBreakdown'] ?? {}),
     );
@@ -67,6 +70,7 @@ class UserModel {
     'level': level,
     'badges': badges,
     'onboardingCompleted': onboardingCompleted,
+    'isPremium': isPremium,
     'lastActiveDate': lastActiveDate != null
         ? Timestamp.fromDate(lastActiveDate!)
         : null,
@@ -82,6 +86,7 @@ class UserModel {
     String? level,
     List<String>? badges,
     bool? onboardingCompleted,
+    bool? isPremium,
     DateTime? lastActiveDate,
     Map<String, int>? scoreBreakdown,
   }) => UserModel(
@@ -96,6 +101,7 @@ class UserModel {
     level: level ?? this.level,
     badges: badges ?? this.badges,
     onboardingCompleted: onboardingCompleted ?? this.onboardingCompleted,
+    isPremium: isPremium ?? this.isPremium,
     lastActiveDate: lastActiveDate ?? this.lastActiveDate,
     scoreBreakdown: scoreBreakdown ?? this.scoreBreakdown,
   );

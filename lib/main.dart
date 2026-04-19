@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app.dart';
 import 'firebase_options.dart';
 import 'services/notification_service.dart';
+import 'services/purchase_service.dart';
 import 'services/seed_service.dart';
 import 'services/storage_service.dart';
 
@@ -22,10 +23,28 @@ void main() async {
 
   // Local notifications
   await NotificationService.init();
+  try {
+    await NotificationService.requestPermissions();
+  } catch (_) {}
 
   // Shared preferences
   final storageService = StorageService();
   await storageService.init();
+
+  // RevenueCat
+  try {
+    await PurchaseService.init();
+  } catch (_) {}
+
+  // Schedule daily reminder if enabled
+  if (storageService.notificationsEnabled) {
+    try {
+      await NotificationService.scheduleDailyReminder(
+        hour: storageService.reminderHour,
+        minute: storageService.reminderMinute,
+      );
+    } catch (_) {}
+  }
 
   runApp(
     ProviderScope(
