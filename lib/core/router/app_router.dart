@@ -14,6 +14,7 @@ import '../../screens/guides/guides_screen.dart';
 import '../../screens/guides/guide_detail_screen.dart';
 import '../../screens/profile/profile_screen.dart';
 import '../../screens/challenge/challenge_detail_screen.dart';
+import '../../screens/leaderboard/leaderboard_screen.dart';
 import '../../screens/premium/paywall_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -88,6 +89,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 const NoTransitionPage(child: HomeScreen()),
           ),
           GoRoute(
+            path: '/leaderboard',
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: LeaderboardScreen()),
+          ),
+          GoRoute(
             path: '/progress',
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: ProgressScreen()),
@@ -152,6 +158,11 @@ class MainShell extends StatelessWidget {
             label: 'Accueil',
           ),
           NavigationDestination(
+            icon: Icon(Icons.leaderboard_outlined),
+            selectedIcon: Icon(Icons.leaderboard),
+            label: 'Classement',
+          ),
+          NavigationDestination(
             icon: Icon(Icons.bar_chart_outlined),
             selectedIcon: Icon(Icons.bar_chart),
             label: 'Progression',
@@ -174,9 +185,10 @@ class MainShell extends StatelessWidget {
   int _calculateSelectedIndex(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
     if (location.startsWith('/home')) return 0;
-    if (location.startsWith('/progress')) return 1;
-    if (location.startsWith('/guides')) return 2;
-    if (location.startsWith('/profile')) return 3;
+    if (location.startsWith('/leaderboard')) return 1;
+    if (location.startsWith('/progress')) return 2;
+    if (location.startsWith('/guides')) return 3;
+    if (location.startsWith('/profile')) return 4;
     return 0;
   }
 
@@ -185,10 +197,12 @@ class MainShell extends StatelessWidget {
       case 0:
         context.go('/home');
       case 1:
-        context.go('/progress');
+        context.go('/leaderboard');
       case 2:
-        context.go('/guides');
+        context.go('/progress');
       case 3:
+        context.go('/guides');
+      case 4:
         context.go('/profile');
     }
   }

@@ -116,4 +116,19 @@ class FirestoreService {
       .collection(AppConstants.guidesCollection)
       .doc(id)
       .update({'views': FieldValue.increment(1)});
+
+  // --- Leaderboard ---
+
+  Future<List<UserModel>> getLeaderboard({
+    required String orderBy,
+    int limit = 50,
+  }) async {
+    final snapshot = await _db
+        .collection(AppConstants.usersCollection)
+        .where('onboardingCompleted', isEqualTo: true)
+        .orderBy(orderBy, descending: true)
+        .limit(limit)
+        .get();
+    return snapshot.docs.map(UserModel.fromFirestore).toList();
+  }
 }

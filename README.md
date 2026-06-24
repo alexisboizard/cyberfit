@@ -34,6 +34,7 @@ lib/
 │   ├── auth/         # Login, register
 │   ├── onboarding/   # Welcome, questionnaire, résultats
 │   ├── home/         # Défi du jour, score, streaks
+│   ├── leaderboard/  # Classement entre joueurs
 │   ├── progress/     # Dashboard, graphiques, historique
 │   ├── guides/       # Bibliothèque tutoriels
 │   └── profile/      # Profil, badges, settings
@@ -132,7 +133,7 @@ Suivi des fonctionnalités à implémenter. Cocher au fur et à mesure.
 
 ### À implémenter
 
-- [ ] **Leaderboard** — classement hebdomadaire entre utilisateurs, top 50, filtrable par niveau
+- [x] **Leaderboard** — classement entre utilisateurs, top 50, podium top 3, onglets Points/Score/Streak
 - [ ] **Partage social** — partager son score, badges ou streak sur les réseaux sociaux (image générée)
 - [ ] **Notifications push ciblées** — "Votre streak va expirer !", "Nouveau défi dispo", relance après inactivité
 - [ ] **Quiz rapides** — quiz de 5 questions par catégorie, en complément des défis pratiques
