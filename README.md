@@ -109,7 +109,44 @@ Trois workflows GitHub Actions sont configurés :
 ## Modèle économique
 
 - **Gratuit** : 3 défis/semaine, score de base, 5 badges, 10 guides
-- **Premium** (4,99 €/mois ou 39 €/an) : défis illimités, scan HIBP, tous les badges, bibliothèque complète, alertes breaches
+- **Premium** (2,99 €/mois ou 19,99 €/an) : défis illimités, tous les badges, bibliothèque complète, protection de streak
+
+## Roadmap Features
+
+Suivi des fonctionnalités à implémenter. Cocher au fur et à mesure.
+
+### Implémenté
+
+- [x] Authentification (email + Google Sign-In)
+- [x] Onboarding (questionnaire initial + score de départ)
+- [x] 28 défis quotidiens avec tutoriels step-by-step
+- [x] Système de score /100 sur 5 domaines
+- [x] Gamification : streaks, points, niveaux, badges
+- [x] Bibliothèque de guides (filtres, recherche)
+- [x] Profil complet (stats, badges, paramètres, suppression compte)
+- [x] Notifications quotidiennes configurables
+- [x] Modèle freemium (3 défis/semaine, limites guides/badges)
+- [x] Paywall RevenueCat (abonnement mensuel/annuel)
+- [x] Analytics Firebase
+- [x] CI/CD (lint, build, Firebase App Distribution)
+
+### À implémenter
+
+- [ ] **Leaderboard** — classement hebdomadaire entre utilisateurs, top 50, filtrable par niveau
+- [ ] **Partage social** — partager son score, badges ou streak sur les réseaux sociaux (image générée)
+- [ ] **Notifications push ciblées** — "Votre streak va expirer !", "Nouveau défi dispo", relance après inactivité
+- [ ] **Quiz rapides** — quiz de 5 questions par catégorie, en complément des défis pratiques
+- [ ] **Statistiques détaillées** — graphiques de progression (fl_chart), radar chart par domaine, historique
+- [ ] **Actualités cybersécurité** — fil d'actus via flux RSS, alertes sur les menaces récentes
+
+### Idées futures (post-MVP)
+
+- [ ] Simulateur de phishing interactif
+- [ ] Défis thématiques hebdomadaires (semaine phishing, semaine mots de passe...)
+- [ ] Mode hors-ligne complet (cache Hive)
+- [ ] Dashboard entreprise B2B (app web séparée)
+- [ ] Rapports de conformité (NIS2, ANSSI)
+- [ ] Multi-langue (EN, ES, DE)
 
 ## Licence
 
