@@ -24,6 +24,12 @@ class SeedService {
     if (guidesSnap.docs.isEmpty) {
       await _seedGuides();
     }
+
+    final quizzesSnap =
+        await _db.collection(AppConstants.quizzesCollection).limit(1).get();
+    if (quizzesSnap.docs.isEmpty) {
+      await _seedQuizzes();
+    }
   }
 
   Future<void> _seedChallenges() async {
@@ -42,6 +48,16 @@ class SeedService {
 
     for (final b in _badges) {
       batch.set(col.doc(b['id'] as String), b);
+    }
+    await batch.commit();
+  }
+
+  Future<void> _seedQuizzes() async {
+    final batch = _db.batch();
+    final col = _db.collection(AppConstants.quizzesCollection);
+
+    for (final q in _quizzes) {
+      batch.set(col.doc(q['id'] as String), q);
     }
     await batch.commit();
   }
@@ -1553,6 +1569,249 @@ const _guides = [
         'stepNumber': 4,
         'text':
             'Oubliez le réseau après utilisation : votre appareil ne doit pas se reconnecter automatiquement.',
+      },
+    ],
+  },
+];
+
+const List<Map<String, dynamic>> _quizzes = [
+  {
+    'id': 'quiz_passwords',
+    'title': 'Les mots de passe',
+    'category': 'passwords',
+    'difficulty': 'easy',
+    'points': 15,
+    'isActive': true,
+    'questions': [
+      {
+        'question': 'Quelle est la longueur minimale recommandée pour un mot de passe sécurisé ?',
+        'options': ['6 caractères', '8 caractères', '12 caractères', '4 caractères'],
+        'correctIndex': 2,
+        'explanation': 'L\'ANSSI recommande au minimum 12 caractères pour un mot de passe robuste.',
+      },
+      {
+        'question': 'Quel est le type de mot de passe le plus sécurisé ?',
+        'options': ['Votre date de naissance', 'Une phrase de passe de 5 mots', 'Le nom de votre animal', '"Password123!"'],
+        'correctIndex': 1,
+        'explanation': 'Une phrase de passe longue (5+ mots aléatoires) est plus sécurisée et plus facile à retenir.',
+      },
+      {
+        'question': 'À quelle fréquence devez-vous changer votre mot de passe ?',
+        'options': ['Tous les mois', 'Tous les 3 mois', 'Uniquement en cas de compromission', 'Jamais'],
+        'correctIndex': 2,
+        'explanation': 'Les experts recommandent de ne changer son mot de passe qu\'en cas de fuite ou compromission détectée.',
+      },
+      {
+        'question': 'Quel outil est recommandé pour gérer ses mots de passe ?',
+        'options': ['Un fichier texte', 'Un gestionnaire de mots de passe', 'Un post-it sur l\'écran', 'Le même mot de passe partout'],
+        'correctIndex': 1,
+        'explanation': 'Un gestionnaire de mots de passe (Bitwarden, 1Password...) génère et stocke vos mots de passe de manière sécurisée.',
+      },
+      {
+        'question': 'Que devez-vous faire si un site a subi une fuite de données ?',
+        'options': ['Rien, ce n\'est pas grave', 'Changer votre mot de passe sur ce site', 'Supprimer votre compte email', 'Éteindre votre ordinateur'],
+        'correctIndex': 1,
+        'explanation': 'Changez immédiatement votre mot de passe sur le site concerné, et sur tout autre site où vous utilisiez le même.',
+      },
+    ],
+  },
+  {
+    'id': 'quiz_phishing',
+    'title': 'Reconnaître le phishing',
+    'category': 'email',
+    'difficulty': 'medium',
+    'points': 20,
+    'isActive': true,
+    'questions': [
+      {
+        'question': 'Quel indice révèle souvent un email de phishing ?',
+        'options': ['L\'email vient de votre banque', 'L\'adresse de l\'expéditeur contient des fautes', 'L\'email est en français', 'Il contient un logo'],
+        'correctIndex': 1,
+        'explanation': 'Les adresses d\'expéditeur avec des fautes ou des domaines suspects (ex: banque-fr.xyz) sont un signal de phishing.',
+      },
+      {
+        'question': 'Que faire si vous recevez un email urgent vous demandant de cliquer sur un lien ?',
+        'options': ['Cliquer immédiatement', 'Vérifier l\'URL en survolant le lien', 'Répondre à l\'email', 'Le transférer à vos collègues'],
+        'correctIndex': 1,
+        'explanation': 'Survolez le lien (sans cliquer) pour vérifier qu\'il pointe vers le vrai site. En cas de doute, allez directement sur le site officiel.',
+      },
+      {
+        'question': 'Quel type d\'information un email de phishing essaie-t-il de voler ?',
+        'options': ['Votre adresse postale', 'Vos identifiants et mots de passe', 'Votre couleur préférée', 'Votre numéro de téléphone fixe'],
+        'correctIndex': 1,
+        'explanation': 'Le phishing vise principalement à voler vos identifiants de connexion, données bancaires ou informations personnelles sensibles.',
+      },
+      {
+        'question': 'Quel est le meilleur réflexe face à un SMS suspect de "votre banque" ?',
+        'options': ['Appeler le numéro dans le SMS', 'Appeler votre banque au numéro officiel', 'Cliquer sur le lien pour vérifier', 'Ignorer et supprimer sans rien faire'],
+        'correctIndex': 1,
+        'explanation': 'Contactez toujours votre banque via le numéro officiel (sur votre carte ou le site web), jamais via un lien ou numéro reçu par SMS.',
+      },
+      {
+        'question': 'Comment s\'appelle le phishing ciblé visant une personne précise ?',
+        'options': ['Spearphishing', 'Whaling', 'Smishing', 'Vishing'],
+        'correctIndex': 0,
+        'explanation': 'Le spearphishing est une attaque ciblée qui utilise des informations personnelles pour rendre l\'email plus crédible.',
+      },
+    ],
+  },
+  {
+    'id': 'quiz_2fa',
+    'title': 'L\'authentification à deux facteurs',
+    'category': 'authentication',
+    'difficulty': 'easy',
+    'points': 15,
+    'isActive': true,
+    'questions': [
+      {
+        'question': 'Que signifie 2FA ?',
+        'options': ['Two Factor Authentication', 'Two File Access', 'Two Firewall Alert', 'Two Free Accounts'],
+        'correctIndex': 0,
+        'explanation': '2FA = Two Factor Authentication (authentification à deux facteurs), une couche de sécurité supplémentaire.',
+      },
+      {
+        'question': 'Quelle méthode 2FA est la MOINS sécurisée ?',
+        'options': ['Application TOTP (Google Authenticator)', 'SMS', 'Clé de sécurité physique', 'Passkey'],
+        'correctIndex': 1,
+        'explanation': 'Le SMS est vulnérable au SIM swapping et à l\'interception. Préférez une app TOTP ou une clé physique.',
+      },
+      {
+        'question': 'Que faire si vous perdez votre téléphone avec l\'app 2FA ?',
+        'options': ['Créer un nouveau compte', 'Utiliser vos codes de récupération sauvegardés', 'Abandonner le compte', 'Appeler Google'],
+        'correctIndex': 1,
+        'explanation': 'Les codes de récupération (backup codes) fournis à l\'activation du 2FA permettent de retrouver l\'accès. Gardez-les en lieu sûr !',
+      },
+      {
+        'question': 'Combien de comptes devriez-vous protéger avec le 2FA ?',
+        'options': ['Seulement la banque', 'Email + banque + réseaux sociaux', 'Tous ceux qui le proposent', 'Aucun, c\'est trop compliqué'],
+        'correctIndex': 2,
+        'explanation': 'Activez le 2FA sur tous les comptes qui le proposent, en priorité email, banque et réseaux sociaux.',
+      },
+      {
+        'question': 'Qu\'est-ce qu\'une passkey ?',
+        'options': ['Un mot de passe très long', 'Une clé cryptographique liée à votre appareil', 'Un code SMS', 'Un email de vérification'],
+        'correctIndex': 1,
+        'explanation': 'Les passkeys sont des clés cryptographiques stockées sur votre appareil, plus sécurisées et pratiques que les mots de passe.',
+      },
+    ],
+  },
+  {
+    'id': 'quiz_social',
+    'title': 'Vie privée sur les réseaux',
+    'category': 'social',
+    'difficulty': 'medium',
+    'points': 20,
+    'isActive': true,
+    'questions': [
+      {
+        'question': 'Quel paramètre devriez-vous vérifier en premier sur un réseau social ?',
+        'options': ['La couleur du thème', 'Les paramètres de confidentialité', 'Le nombre d\'amis', 'Les notifications'],
+        'correctIndex': 1,
+        'explanation': 'Les paramètres de confidentialité déterminent qui peut voir vos publications, votre profil et vos informations personnelles.',
+      },
+      {
+        'question': 'Pourquoi ne pas publier vos photos de vacances en temps réel ?',
+        'options': ['Ça consomme de la data', 'Cela signale que votre domicile est vide', 'Les photos sont de mauvaise qualité', 'Ce n\'est pas intéressant'],
+        'correctIndex': 1,
+        'explanation': 'Publier en temps réel indique que vous n\'êtes pas chez vous, exposant votre domicile à un risque de cambriolage.',
+      },
+      {
+        'question': 'Que permettent les données que vous partagez sur les réseaux sociaux ?',
+        'options': ['Rien, c\'est juste pour les amis', 'Le ciblage publicitaire et le profilage', 'Améliorer la qualité du réseau', 'Protéger votre compte'],
+        'correctIndex': 1,
+        'explanation': 'Vos données sont utilisées pour le ciblage publicitaire, le profilage, et peuvent être exploitées par des cybercriminels.',
+      },
+      {
+        'question': 'Que faire avant d\'accepter une demande d\'ami d\'un inconnu ?',
+        'options': ['L\'accepter pour être poli', 'Vérifier si vous avez des amis en commun', 'Vérifier son profil et refuser si suspect', 'Lui envoyer un message'],
+        'correctIndex': 2,
+        'explanation': 'Vérifiez le profil (date de création, contenu, amis). Les faux profils servent souvent à collecter vos informations.',
+      },
+      {
+        'question': 'Comment télécharger toutes vos données depuis un réseau social ?',
+        'options': ['C\'est impossible', 'Via les paramètres > Télécharger vos données', 'En faisant une capture d\'écran', 'En contactant le support'],
+        'correctIndex': 1,
+        'explanation': 'Le RGPD vous donne le droit de télécharger vos données. Allez dans Paramètres > Confidentialité > Télécharger vos données.',
+      },
+    ],
+  },
+  {
+    'id': 'quiz_devices',
+    'title': 'Sécurité des appareils',
+    'category': 'device',
+    'difficulty': 'easy',
+    'points': 15,
+    'isActive': true,
+    'questions': [
+      {
+        'question': 'Pourquoi est-il important de mettre à jour son téléphone ?',
+        'options': ['Pour avoir de nouvelles couleurs', 'Pour corriger des failles de sécurité', 'Pour avoir plus de stockage', 'Ce n\'est pas important'],
+        'correctIndex': 1,
+        'explanation': 'Les mises à jour corrigent des vulnérabilités de sécurité connues qui pourraient être exploitées par des attaquants.',
+      },
+      {
+        'question': 'Quel type de verrouillage est le plus sécurisé pour un smartphone ?',
+        'options': ['Glissement (swipe)', 'Code à 4 chiffres', 'Empreinte digitale + code à 6 chiffres', 'Aucun verrouillage'],
+        'correctIndex': 2,
+        'explanation': 'La biométrie (empreinte, Face ID) combinée à un code long offre le meilleur compromis sécurité/praticité.',
+      },
+      {
+        'question': 'Que risquez-vous en branchant une clé USB inconnue ?',
+        'options': ['Rien, c\'est juste du stockage', 'Une infection par malware', 'Une mise à jour automatique', 'Un formatage du disque'],
+        'correctIndex': 1,
+        'explanation': 'Une clé USB peut contenir des malwares qui s\'exécutent automatiquement. N\'utilisez jamais une clé USB d\'origine inconnue.',
+      },
+      {
+        'question': 'Comment protéger vos données en cas de vol de votre téléphone ?',
+        'options': ['Écrire son code PIN sur le téléphone', 'Activer le chiffrement et la localisation à distance', 'Mettre un autocollant avec son numéro', 'Rien, le code PIN suffit'],
+        'correctIndex': 1,
+        'explanation': 'Le chiffrement protège vos données et la localisation à distance permet d\'effacer le téléphone en cas de vol.',
+      },
+      {
+        'question': 'Quelle est la meilleure pratique pour les applications ?',
+        'options': ['Installer depuis n\'importe quel site', 'N\'installer que depuis les stores officiels', 'Installer un maximum d\'apps', 'Ne jamais mettre à jour les apps'],
+        'correctIndex': 1,
+        'explanation': 'Les stores officiels (App Store, Play Store) vérifient les applications. Évitez les sources tierces non vérifiées.',
+      },
+    ],
+  },
+  {
+    'id': 'quiz_navigation',
+    'title': 'Navigation sécurisée',
+    'category': 'navigation',
+    'difficulty': 'medium',
+    'points': 20,
+    'isActive': true,
+    'questions': [
+      {
+        'question': 'Que signifie le cadenas dans la barre d\'adresse du navigateur ?',
+        'options': ['Le site est 100% sûr', 'La connexion est chiffrée (HTTPS)', 'Le site est gouvernemental', 'Votre antivirus est actif'],
+        'correctIndex': 1,
+        'explanation': 'Le cadenas indique une connexion HTTPS chiffrée, mais ne garantit pas que le site est légitime — un site de phishing peut aussi avoir HTTPS.',
+      },
+      {
+        'question': 'Quel est le risque d\'un Wi-Fi public non protégé ?',
+        'options': ['Connexion lente', 'Interception de vos données (man-in-the-middle)', 'Batterie qui se décharge', 'Aucun risque'],
+        'correctIndex': 1,
+        'explanation': 'Sur un Wi-Fi public, un attaquant peut intercepter vos données non chiffrées. Utilisez un VPN pour vous protéger.',
+      },
+      {
+        'question': 'Qu\'est-ce qu\'un VPN ?',
+        'options': ['Un antivirus', 'Un tunnel chiffré pour votre connexion internet', 'Un type de Wi-Fi', 'Un navigateur web'],
+        'correctIndex': 1,
+        'explanation': 'Un VPN (Virtual Private Network) crée un tunnel chiffré qui protège vos données, surtout sur les réseaux publics.',
+      },
+      {
+        'question': 'Quel DNS est recommandé pour plus de sécurité ?',
+        'options': ['Le DNS de votre FAI', 'Un DNS chiffré (DoH/DoT) comme Quad9 ou Cloudflare', 'Google DNS non chiffré', 'Aucun DNS'],
+        'correctIndex': 1,
+        'explanation': 'Les DNS chiffrés (DNS over HTTPS/TLS) comme Quad9 (9.9.9.9) protègent vos requêtes DNS contre l\'espionnage et le filtrage.',
+      },
+      {
+        'question': 'Que devez-vous vérifier avant d\'entrer vos identifiants sur un site ?',
+        'options': ['Que le site a de belles couleurs', 'Que l\'URL est exacte et commence par https://', 'Que le site charge rapidement', 'Que le site a des publicités'],
+        'correctIndex': 1,
+        'explanation': 'Vérifiez toujours l\'URL exacte (attention aux typos comme goog1e.com) et la présence du HTTPS avant de saisir des informations sensibles.',
       },
     ],
   },

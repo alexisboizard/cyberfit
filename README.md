@@ -136,7 +136,7 @@ Suivi des fonctionnalités à implémenter. Cocher au fur et à mesure.
 - [x] **Leaderboard** — classement entre utilisateurs, top 50, podium top 3, onglets Points/Score/Streak
 - [x] **Partage social** — partager son profil (image générée), son classement, ou ses défis complétés
 - [x] **Notifications push ciblées** — alerte streak en danger, rappel après inactivité, nouveau défi disponible
-- [ ] **Quiz rapides** — quiz de 5 questions par catégorie, en complément des défis pratiques
+- [x] **Quiz rapides** — 6 quiz de 5 questions par catégorie, avec explications et partage de score
 - [ ] **Statistiques détaillées** — graphiques de progression (fl_chart), radar chart par domaine, historique
 - [ ] **Actualités cybersécurité** — fil d'actus via flux RSS, alertes sur les menaces récentes
 

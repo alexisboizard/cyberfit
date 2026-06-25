@@ -92,6 +92,8 @@ abstract final class AppConstants {
   static const challengesCollection = 'challenges';
   static const badgesCollection = 'badges';
   static const guidesCollection = 'guides';
+  static const quizzesCollection = 'quizzes';
+  static const completedQuizzesSubcollection = 'completedQuizzes';
   static const completedChallengesSubcollection = 'completedChallenges';
 
   // Score domains

@@ -15,6 +15,8 @@ import '../../screens/guides/guide_detail_screen.dart';
 import '../../screens/profile/profile_screen.dart';
 import '../../screens/challenge/challenge_detail_screen.dart';
 import '../../screens/leaderboard/leaderboard_screen.dart';
+import '../../screens/quiz/quiz_list_screen.dart';
+import '../../screens/quiz/quiz_play_screen.dart';
 import '../../screens/premium/paywall_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -116,6 +118,21 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/premium',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const PaywallScreen(),
+      ),
+
+      // Quiz routes
+      GoRoute(
+        path: '/quizzes',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const QuizListScreen(),
+      ),
+      GoRoute(
+        path: '/quiz/:id',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return QuizPlayScreen(quizId: id);
+        },
       ),
 
       // Detail routes (outside shell for full screen)

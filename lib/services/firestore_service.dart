@@ -4,6 +4,7 @@ import '../models/user_model.dart';
 import '../models/challenge_model.dart';
 import '../models/badge_model.dart';
 import '../models/guide_model.dart';
+import '../models/quiz_model.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -116,6 +117,44 @@ class FirestoreService {
       .collection(AppConstants.guidesCollection)
       .doc(id)
       .update({'views': FieldValue.increment(1)});
+
+  // --- Quizzes ---
+
+  Future<List<QuizModel>> getQuizzes({String? category}) async {
+    Query<Map<String, dynamic>> query = _db
+        .collection(AppConstants.quizzesCollection)
+        .where('isActive', isEqualTo: true);
+    if (category != null) {
+      query = query.where('category', isEqualTo: category);
+    }
+    final snapshot = await query.get();
+    return snapshot.docs.map(QuizModel.fromFirestore).toList();
+  }
+
+  Future<QuizModel?> getQuiz(String id) async {
+    final doc = await _db.collection(AppConstants.quizzesCollection).doc(id).get();
+    if (!doc.exists) return null;
+    return QuizModel.fromFirestore(doc);
+  }
+
+  Future<bool> isQuizCompleted(String uid, String quizId) async {
+    final doc = await _userDoc(uid)
+        .collection(AppConstants.completedQuizzesSubcollection)
+        .doc(quizId)
+        .get();
+    return doc.exists;
+  }
+
+  Future<void> addCompletedQuiz(String uid, String quizId, int score, int total) =>
+      _userDoc(uid)
+          .collection(AppConstants.completedQuizzesSubcollection)
+          .doc(quizId)
+          .set({
+        'quizId': quizId,
+        'score': score,
+        'total': total,
+        'completedAt': Timestamp.now(),
+      });
 
   // --- Leaderboard ---
 
