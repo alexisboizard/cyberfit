@@ -11,7 +11,9 @@ import '../../providers/user_provider.dart';
 import '../../providers/badge_provider.dart';
 import '../../providers/purchase_provider.dart';
 import '../../services/notification_service.dart';
+import '../../services/share_service.dart';
 import '../../widgets/badge_item.dart';
+import '../../widgets/share_card.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -100,6 +102,14 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
+              const SizedBox(height: 12),
+
+              // Share button
+              OutlinedButton.icon(
+                onPressed: () => _shareProfile(context, user),
+                icon: const Icon(Icons.share),
+                label: const Text('Partager mon profil'),
+              ),
               const SizedBox(height: 24),
 
               // Stats grid
@@ -190,6 +200,50 @@ class ProfileScreen extends ConsumerWidget {
             ],
           );
         },
+      ),
+    );
+  }
+
+  void _shareProfile(BuildContext context, dynamic user) {
+    final repaintKey = GlobalKey();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.transparent,
+        contentPadding: EdgeInsets.zero,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            RepaintBoundary(
+              key: repaintKey,
+              child: ShareCard(user: user),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FilledButton.icon(
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    ShareService.shareImage(
+                      repaintKey,
+                      'Mon profil CyberFit : Score ${user.currentScore}/100, '
+                      '${user.totalPoints} points, ${user.currentStreak} jours de streak ! '
+                      'Rejoins-moi sur CyberFit !',
+                    );
+                  },
+                  icon: const Icon(Icons.share),
+                  label: const Text('Partager'),
+                ),
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+                  child: const Text('Fermer'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

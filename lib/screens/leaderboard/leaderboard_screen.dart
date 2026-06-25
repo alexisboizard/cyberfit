@@ -4,6 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../models/user_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/leaderboard_provider.dart';
+import '../../services/share_service.dart';
 
 class LeaderboardScreen extends ConsumerWidget {
   const LeaderboardScreen({super.key});
@@ -15,7 +16,28 @@ class LeaderboardScreen extends ConsumerWidget {
     final currentUid = ref.watch(authStateProvider).valueOrNull?.uid;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Classement')),
+      appBar: AppBar(
+        title: const Text('Classement'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () {
+              final users = leaderboardAsync.valueOrNull ?? [];
+              final myIndex = users.indexWhere((u) => u.uid == currentUid);
+              final rank = myIndex >= 0 ? myIndex + 1 : null;
+              final typeLabel = switch (selectedType) {
+                LeaderboardType.points => 'points',
+                LeaderboardType.score => 'score',
+                LeaderboardType.streak => 'streak',
+              };
+              final rankText = rank != null
+                  ? 'Je suis #$rank au classement $typeLabel sur CyberFit !'
+                  : 'Découvre le classement CyberFit !';
+              ShareService.shareText('$rankText Rejoins-moi !');
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           // Tab selector

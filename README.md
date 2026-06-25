@@ -134,7 +134,7 @@ Suivi des fonctionnalités à implémenter. Cocher au fur et à mesure.
 ### À implémenter
 
 - [x] **Leaderboard** — classement entre utilisateurs, top 50, podium top 3, onglets Points/Score/Streak
-- [ ] **Partage social** — partager son score, badges ou streak sur les réseaux sociaux (image générée)
+- [x] **Partage social** — partager son profil (image générée), son classement, ou ses défis complétés
 - [ ] **Notifications push ciblées** — "Votre streak va expirer !", "Nouveau défi dispo", relance après inactivité
 - [ ] **Quiz rapides** — quiz de 5 questions par catégorie, en complément des défis pratiques
 - [ ] **Statistiques détaillées** — graphiques de progression (fl_chart), radar chart par domaine, historique

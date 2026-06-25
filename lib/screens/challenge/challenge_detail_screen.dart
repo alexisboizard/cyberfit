@@ -7,6 +7,7 @@ import '../../models/challenge_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/purchase_provider.dart';
+import '../../services/share_service.dart';
 import '../../widgets/tutorial_step.dart';
 
 final _challengeProvider =
@@ -183,15 +184,36 @@ class _ChallengeDetailScreenState extends ConsumerState<ChallengeDetailScreen> {
                 ),
               ],
               const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () {
-                    Navigator.pop(ctx);
-                    context.pop();
-                  },
-                  child: const Text('Continuer'),
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        final badgeText = newBadges.isNotEmpty
+                            ? ' + badge ${newBadges.first} !'
+                            : '';
+                        ShareService.shareText(
+                          'Je viens de compléter le défi "${challenge.title}" '
+                          'sur CyberFit et j\'ai gagné ${challenge.points} points$badgeText '
+                          'Rejoins-moi sur CyberFit !',
+                        );
+                      },
+                      icon: const Icon(Icons.share),
+                      label: const Text('Partager'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        context.pop();
+                      },
+                      child: const Text('Continuer'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
