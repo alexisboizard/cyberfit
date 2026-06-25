@@ -4,8 +4,9 @@ import '../models/news_model.dart';
 
 class NewsService {
   static const _feeds = [
-    _Feed('https://www.cert.ssi.gouv.fr/feed/', 'CERT-FR'),
     _Feed('https://www.cybermalveillance.gouv.fr/tous-nos-contenus/feed', 'Cybermalveillance'),
+    _Feed('https://www.cnil.fr/fr/rss.xml', 'CNIL'),
+    _Feed('https://www.numerama.com/cyberguerre/feed/', 'Numerama'),
   ];
 
   static Future<List<NewsItem>> fetchNews() async {
