@@ -5,6 +5,7 @@ import '../../core/constants/app_constants.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/challenge_provider.dart';
 import '../../providers/purchase_provider.dart';
+import '../../providers/smart_notification_provider.dart';
 import '../../widgets/challenge_card.dart';
 import '../../widgets/score_gauge.dart';
 import '../../widgets/streak_counter.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userAsync = ref.watch(userStreamProvider);
     final dailyChallenge = ref.watch(dailyChallengeProvider);
+    ref.watch(smartNotificationProvider);
 
     return Scaffold(
       appBar: AppBar(
