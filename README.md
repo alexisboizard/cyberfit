@@ -138,7 +138,7 @@ Suivi des fonctionnalités à implémenter. Cocher au fur et à mesure.
 - [x] **Notifications push ciblées** — alerte streak en danger, rappel après inactivité, nouveau défi disponible
 - [x] **Quiz rapides** — 6 quiz de 5 questions par catégorie, avec explications et partage de score
 - [x] **Statistiques détaillées** — radar chart, barres par catégorie, activité hebdomadaire, stats détaillées
-- [ ] **Actualités cybersécurité** — fil d'actus via flux RSS, alertes sur les menaces récentes
+- [x] **Actualités cybersécurité** — fil d'actus via RSS (CERT-FR, Cybermalveillance.gouv.fr)
 
 ### Idées futures (post-MVP)
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app.dart';
 import 'firebase_options.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'services/notification_service.dart';
 import 'services/purchase_service.dart';
 import 'services/seed_service.dart';
@@ -12,6 +13,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  timeago.setLocaleMessages('fr', timeago.FrMessages());
 
   // Seed Firestore with initial content if collections are empty
   // Non-blocking: don't prevent app startup if Firestore is unreachable

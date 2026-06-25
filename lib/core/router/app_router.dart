@@ -17,6 +17,7 @@ import '../../screens/challenge/challenge_detail_screen.dart';
 import '../../screens/leaderboard/leaderboard_screen.dart';
 import '../../screens/quiz/quiz_list_screen.dart';
 import '../../screens/quiz/quiz_play_screen.dart';
+import '../../screens/news/news_screen.dart';
 import '../../screens/premium/paywall_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -118,6 +119,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/premium',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const PaywallScreen(),
+      ),
+
+      // News
+      GoRoute(
+        path: '/news',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const NewsScreen(),
       ),
 
       // Quiz routes

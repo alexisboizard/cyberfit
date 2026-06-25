@@ -25,8 +25,9 @@ class HomeScreen extends ConsumerWidget {
         title: const Text(AppConstants.appName),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {},
+            icon: const Icon(Icons.newspaper_outlined),
+            tooltip: 'Actualités cyber',
+            onPressed: () => context.push('/news'),
           ),
         ],
       ),
