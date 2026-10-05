@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/app_colors.dart';
 import '../../providers/auth_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -27,13 +26,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
+    final theme = Theme.of(context);
 
     ref.listen(authNotifierProvider, (_, state) {
       if (state.hasError) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(state.error.toString()),
-            backgroundColor: AppColors.error,
+            backgroundColor: theme.colorScheme.error,
           ),
         );
       }
@@ -42,30 +42,43 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(28),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 48),
-                // Logo/Title
-                Icon(Icons.shield, size: 64, color: AppColors.primary),
-                const SizedBox(height: 16),
+                // Logo
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        theme.colorScheme.primary,
+                        theme.colorScheme.primary.withOpacity(0.7),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: const Icon(Icons.shield_rounded, size: 40, color: Colors.white),
+                ),
+                const SizedBox(height: 24),
                 Text(
                   'CyberFit',
-                  style: Theme.of(context).textTheme.displaySmall,
-                  textAlign: TextAlign.center,
+                  style: theme.textTheme.displayMedium,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
                 Text(
                   'Votre coach cyber au quotidien',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(fontSize: 16),
                 ),
                 const SizedBox(height: 48),
 
-                // Email field
+                // Email
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -80,9 +93,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
 
-                // Password field
+                // Password
                 TextFormField(
                   controller: _passwordController,
                   obscureText: _obscurePassword,
@@ -106,9 +119,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   },
                   onFieldSubmitted: (_) => _signIn(),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
 
-                // Sign in button
+                // Sign in
                 ElevatedButton(
                   onPressed: authState.isLoading ? null : _signIn,
                   child: authState.isLoading
@@ -122,7 +135,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         )
                       : const Text('Se connecter'),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
 
                 // Divider
                 Row(
@@ -130,31 +143,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const Expanded(child: Divider()),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        'ou',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                      child: Text('ou', style: theme.textTheme.bodySmall),
                     ),
                     const Expanded(child: Divider()),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
 
-                // Google sign in
+                // Google
                 OutlinedButton.icon(
                   onPressed: authState.isLoading ? null : _signInWithGoogle,
                   icon: const Icon(Icons.g_mobiledata, size: 24),
                   label: const Text('Continuer avec Google'),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
 
-                // Register link
+                // Register
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Pas encore de compte ? ',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: theme.textTheme.bodyMedium,
                     ),
                     TextButton(
                       onPressed: () => context.go('/register'),

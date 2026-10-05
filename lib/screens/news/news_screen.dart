@@ -11,6 +11,7 @@ class NewsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final newsAsync = ref.watch(newsProvider);
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Actualités Cyber')),
@@ -20,10 +21,11 @@ class NewsScreen extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.wifi_off, size: 64, color: AppColors.textTertiary),
+              Icon(Icons.wifi_off_rounded, size: 64,
+                  color: theme.colorScheme.onSurface.withOpacity(0.2)),
               const SizedBox(height: 16),
               const Text('Impossible de charger les actualités'),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               FilledButton(
                 onPressed: () => ref.invalidate(newsProvider),
                 child: const Text('Réessayer'),
@@ -37,10 +39,11 @@ class NewsScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.newspaper, size: 64, color: AppColors.textTertiary),
+                  Icon(Icons.newspaper_rounded, size: 64,
+                      color: theme.colorScheme.onSurface.withOpacity(0.2)),
                   const SizedBox(height: 16),
                   const Text('Aucune actualité pour le moment'),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   FilledButton(
                     onPressed: () => ref.invalidate(newsProvider),
                     child: const Text('Actualiser'),
@@ -53,59 +56,62 @@ class NewsScreen extends ConsumerWidget {
           return RefreshIndicator(
             onRefresh: () async => ref.invalidate(newsProvider),
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               itemCount: news.length,
               itemBuilder: (context, index) {
                 final item = news[index];
-                return Card(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: GestureDetector(
                     onTap: () => launchUrl(
                       Uri.parse(item.url),
                       mode: LaunchMode.externalApplication,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
+                    child: Container(
+                      padding: const EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        color: theme.cardTheme.color,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: theme.dividerColor.withOpacity(0.3),
+                        ),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Source and time
                           Row(
                             children: [
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 2,
+                                  horizontal: 10,
+                                  vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.1),
+                                  color: _sourceColor(item.source).withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
                                   item.source,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: _sourceColor(item.source),
+                                  ),
                                 ),
                               ),
                               const Spacer(),
                               Text(
                                 timeago.format(item.publishedAt, locale: 'fr'),
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: AppColors.textTertiary,
-                                    ),
+                                style: theme.textTheme.bodySmall,
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10),
-                          // Title
+                          const SizedBox(height: 12),
                           Text(
                             item.title,
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              height: 1.3,
+                            ),
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -113,29 +119,28 @@ class NewsScreen extends ConsumerWidget {
                             const SizedBox(height: 6),
                             Text(
                               item.description,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AppColors.textSecondary,
-                                  ),
+                              style: theme.textTheme.bodySmall,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                'Lire l\'article',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                'Lire',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: theme.colorScheme.primary,
+                                ),
                               ),
                               const SizedBox(width: 4),
-                              const Icon(
-                                Icons.open_in_new,
+                              Icon(
+                                Icons.arrow_forward_rounded,
                                 size: 14,
-                                color: AppColors.primary,
+                                color: theme.colorScheme.primary,
                               ),
                             ],
                           ),
@@ -150,5 +155,18 @@ class NewsScreen extends ConsumerWidget {
         },
       ),
     );
+  }
+
+  Color _sourceColor(String source) {
+    switch (source) {
+      case 'Cybermalveillance':
+        return AppColors.primary;
+      case 'CNIL':
+        return AppColors.privacy;
+      case 'Numerama':
+        return AppColors.authentication;
+      default:
+        return AppColors.primary;
+    }
   }
 }

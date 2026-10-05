@@ -37,7 +37,8 @@ lib/
 │   ├── leaderboard/  # Classement entre joueurs
 │   ├── progress/     # Dashboard, graphiques, historique
 │   ├── guides/       # Bibliothèque tutoriels
-│   └── profile/      # Profil, badges, settings
+│   ├── profile/      # Profil, badges
+│   └── settings/     # Réglages (thème, notifications, compte)
 ├── widgets/          # Composants réutilisables
 └── services/         # Firebase, notifications, stockage local
 ```
@@ -123,7 +124,7 @@ Suivi des fonctionnalités à implémenter. Cocher au fur et à mesure.
 - [x] 28 défis quotidiens avec tutoriels step-by-step
 - [x] Système de score /100 sur 5 domaines
 - [x] Gamification : streaks, points, niveaux, badges
-- [x] Bibliothèque de guides (filtres, recherche)
+- [x] Bibliothèque de guides (filtres, recherche, favoris)
 - [x] Profil complet (stats, badges, paramètres, suppression compte)
 - [x] Notifications quotidiennes configurables
 - [x] Modèle freemium (3 défis/semaine, limites guides/badges)
@@ -138,7 +139,11 @@ Suivi des fonctionnalités à implémenter. Cocher au fur et à mesure.
 - [x] **Notifications push ciblées** — alerte streak en danger, rappel après inactivité, nouveau défi disponible
 - [x] **Quiz rapides** — 6 quiz de 5 questions par catégorie, avec explications et partage de score
 - [x] **Statistiques détaillées** — radar chart, barres par catégorie, activité hebdomadaire, stats détaillées
-- [x] **Actualités cybersécurité** — fil d'actus via RSS (CERT-FR, Cybermalveillance.gouv.fr)
+- [x] **Actualités cybersécurité** — fil d'actus via RSS (Cybermalveillance, CNIL, Numerama)
+- [x] **Mode sombre** — thème dark complet avec détection automatique du système
+- [x] **Refonte UI** — design system revu, custom gauges, meilleure hiérarchie visuelle, bordures arrondies 20px
+- [x] **Écran Réglages** — thème, notifications, abonnement, à propos, gestion du compte
+- [x] **Guides favoris** — onglet favoris dans la bibliothèque, bookmark/unbookmark
 
 ### Idées futures (post-MVP)
 

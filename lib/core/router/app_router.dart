@@ -19,6 +19,7 @@ import '../../screens/quiz/quiz_list_screen.dart';
 import '../../screens/quiz/quiz_play_screen.dart';
 import '../../screens/news/news_screen.dart';
 import '../../screens/premium/paywall_screen.dart';
+import '../../screens/settings/settings_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -128,6 +129,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const NewsScreen(),
       ),
 
+      // Settings
+      GoRoute(
+        path: '/settings',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const SettingsScreen(),
+      ),
+
       // Quiz routes
       GoRoute(
         path: '/quizzes',
@@ -179,27 +187,27 @@ class MainShell extends StatelessWidget {
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
+            selectedIcon: Icon(Icons.home_rounded),
             label: 'Accueil',
           ),
           NavigationDestination(
             icon: Icon(Icons.leaderboard_outlined),
-            selectedIcon: Icon(Icons.leaderboard),
+            selectedIcon: Icon(Icons.leaderboard_rounded),
             label: 'Classement',
           ),
           NavigationDestination(
             icon: Icon(Icons.bar_chart_outlined),
-            selectedIcon: Icon(Icons.bar_chart),
-            label: 'Progression',
+            selectedIcon: Icon(Icons.bar_chart_rounded),
+            label: 'Stats',
           ),
           NavigationDestination(
             icon: Icon(Icons.menu_book_outlined),
-            selectedIcon: Icon(Icons.menu_book),
+            selectedIcon: Icon(Icons.menu_book_rounded),
             label: 'Guides',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
+            selectedIcon: Icon(Icons.person_rounded),
             label: 'Profil',
           ),
         ],

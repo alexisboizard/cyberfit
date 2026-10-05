@@ -16,12 +16,18 @@ class LeaderboardScreen extends ConsumerWidget {
     final currentUid = ref.watch(authStateProvider).valueOrNull?.uid;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Classement'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+              child: Row(
+                children: [
+                  Text('Classement', style: Theme.of(context).textTheme.displaySmall),
+                  const Spacer(),
+          GestureDetector(
+            onTap: () {
               final users = leaderboardAsync.valueOrNull ?? [];
               final myIndex = users.indexWhere((u) => u.uid == currentUid);
               final rank = myIndex >= 0 ? myIndex + 1 : null;
@@ -35,14 +41,26 @@ class LeaderboardScreen extends ConsumerWidget {
                   : 'Découvre le classement CyberFit !';
               ShareService.shareText('$rankText Rejoins-moi !');
             },
+            child: Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Icon(
+                Icons.share_rounded,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                size: 20,
+              ),
+            ),
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Tab selector
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: SegmentedButton<LeaderboardType>(
               segments: const [
                 ButtonSegment(
@@ -124,6 +142,7 @@ class LeaderboardScreen extends ConsumerWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

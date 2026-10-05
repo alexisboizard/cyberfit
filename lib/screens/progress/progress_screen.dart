@@ -18,8 +18,8 @@ class ProgressScreen extends ConsumerWidget {
     final completedAsync = ref.watch(completedChallengesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Progression')),
-      body: userAsync.when(
+      body: SafeArea(
+        child: userAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Erreur: $e')),
         data: (user) {
@@ -28,8 +28,10 @@ class ProgressScreen extends ConsumerWidget {
           }
 
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
             children: [
+              Text('Progression', style: Theme.of(context).textTheme.displaySmall),
+              const SizedBox(height: 20),
               // Summary stats cards
               Row(
                 children: [
@@ -380,6 +382,7 @@ class ProgressScreen extends ConsumerWidget {
             ],
           );
         },
+      ),
       ),
     );
   }

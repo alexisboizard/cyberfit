@@ -19,16 +19,22 @@ class _QuizListScreenState extends ConsumerState<QuizListScreen> {
   Widget build(BuildContext context) {
     final quizzesAsync = ref.watch(quizzesProvider);
 
+    final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Quiz')),
-      body: Column(
-        children: [
-          // Category filters
-          SizedBox(
-            height: 48,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
+              child: Text('Quiz', style: theme.textTheme.displaySmall),
+            ),
+            // Category filters
+            SizedBox(
+              height: 44,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
               children: [
                 _FilterChip(
                   label: 'Tous',
@@ -58,13 +64,14 @@ class _QuizListScreenState extends ConsumerState<QuizListScreen> {
                     : quizzes;
 
                 if (filtered.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.quiz_outlined, size: 64, color: AppColors.textTertiary),
-                        SizedBox(height: 16),
-                        Text('Aucun quiz disponible'),
+                        Icon(Icons.quiz_outlined, size: 64,
+                            color: theme.colorScheme.onSurface.withOpacity(0.2)),
+                        const SizedBox(height: 16),
+                        const Text('Aucun quiz disponible'),
                       ],
                     ),
                   );
@@ -125,7 +132,8 @@ class _QuizListScreenState extends ConsumerState<QuizListScreen> {
               },
             ),
           ),
-        ],
+          ],
+        ),
       ),
     );
   }

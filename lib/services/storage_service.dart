@@ -6,6 +6,8 @@ class StorageService {
   static const _keyReminderHour = 'reminder_hour';
   static const _keyReminderMinute = 'reminder_minute';
   static const _keyLastChallengeDate = 'last_challenge_date';
+  static const _keyThemeMode = 'theme_mode';
+  static const _keyFavoriteGuides = 'favorite_guides';
 
   late final SharedPreferences _prefs;
 
@@ -36,4 +38,27 @@ class StorageService {
   String? get lastChallengeDate => _prefs.getString(_keyLastChallengeDate);
   Future<void> setLastChallengeDate(String value) =>
       _prefs.setString(_keyLastChallengeDate, value);
+
+  // Theme
+  String get themeMode => _prefs.getString(_keyThemeMode) ?? 'system';
+  Future<void> setThemeMode(String value) =>
+      _prefs.setString(_keyThemeMode, value);
+
+  // Favorite guides
+  List<String> get favoriteGuides =>
+      _prefs.getStringList(_keyFavoriteGuides) ?? [];
+  Future<void> setFavoriteGuides(List<String> value) =>
+      _prefs.setStringList(_keyFavoriteGuides, value);
+
+  bool isGuideFavorite(String guideId) => favoriteGuides.contains(guideId);
+
+  Future<void> toggleGuideFavorite(String guideId) async {
+    final favorites = List<String>.from(favoriteGuides);
+    if (favorites.contains(guideId)) {
+      favorites.remove(guideId);
+    } else {
+      favorites.add(guideId);
+    }
+    await setFavoriteGuides(favorites);
+  }
 }
