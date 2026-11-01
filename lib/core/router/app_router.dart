@@ -20,6 +20,12 @@ import '../../screens/quiz/quiz_play_screen.dart';
 import '../../screens/news/news_screen.dart';
 import '../../screens/premium/paywall_screen.dart';
 import '../../screens/settings/settings_screen.dart';
+import '../../screens/tools/tools_hub_screen.dart';
+import '../../screens/tools/password_checker_screen.dart';
+import '../../screens/tools/email_exposure_screen.dart';
+import '../../screens/tools/url_analyzer_screen.dart';
+import '../../screens/tools/security_checklist_screen.dart';
+import '../../screens/tools/phishing_simulator_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -93,9 +99,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                 const NoTransitionPage(child: HomeScreen()),
           ),
           GoRoute(
-            path: '/leaderboard',
+            path: '/tools',
             pageBuilder: (context, state) =>
-                const NoTransitionPage(child: LeaderboardScreen()),
+                const NoTransitionPage(child: ToolsHubScreen()),
           ),
           GoRoute(
             path: '/progress',
@@ -113,6 +119,40 @@ final routerProvider = Provider<GoRouter>((ref) {
                 const NoTransitionPage(child: ProfileScreen()),
           ),
         ],
+      ),
+
+      // Leaderboard (full screen)
+      GoRoute(
+        path: '/leaderboard',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const LeaderboardScreen(),
+      ),
+
+      // Tools detail routes
+      GoRoute(
+        path: '/tools/password',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const PasswordCheckerScreen(),
+      ),
+      GoRoute(
+        path: '/tools/email',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const EmailExposureScreen(),
+      ),
+      GoRoute(
+        path: '/tools/url',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const UrlAnalyzerScreen(),
+      ),
+      GoRoute(
+        path: '/tools/checklist',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const SecurityChecklistScreen(),
+      ),
+      GoRoute(
+        path: '/tools/phishing',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const PhishingSimulatorScreen(),
       ),
 
       // Premium
@@ -191,9 +231,9 @@ class MainShell extends StatelessWidget {
             label: 'Accueil',
           ),
           NavigationDestination(
-            icon: Icon(Icons.leaderboard_outlined),
-            selectedIcon: Icon(Icons.leaderboard_rounded),
-            label: 'Classement',
+            icon: Icon(Icons.build_outlined),
+            selectedIcon: Icon(Icons.build_rounded),
+            label: 'Outils',
           ),
           NavigationDestination(
             icon: Icon(Icons.bar_chart_outlined),
@@ -218,7 +258,7 @@ class MainShell extends StatelessWidget {
   int _calculateSelectedIndex(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
     if (location.startsWith('/home')) return 0;
-    if (location.startsWith('/leaderboard')) return 1;
+    if (location.startsWith('/tools')) return 1;
     if (location.startsWith('/progress')) return 2;
     if (location.startsWith('/guides')) return 3;
     if (location.startsWith('/profile')) return 4;
@@ -230,7 +270,7 @@ class MainShell extends StatelessWidget {
       case 0:
         context.go('/home');
       case 1:
-        context.go('/leaderboard');
+        context.go('/tools');
       case 2:
         context.go('/progress');
       case 3:

@@ -299,10 +299,10 @@ class HomeScreen extends ConsumerWidget {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: _QuickAction(
-                                  icon: Icons.menu_book_rounded,
-                                  label: 'Guides',
-                                  color: AppColors.passwords,
-                                  onTap: () => context.go('/guides'),
+                                  icon: Icons.build_rounded,
+                                  label: 'Outils',
+                                  color: AppColors.secondary,
+                                  onTap: () => context.go('/tools'),
                                 ),
                               ),
                               const SizedBox(width: 12),
@@ -311,7 +311,7 @@ class HomeScreen extends ConsumerWidget {
                                   icon: Icons.leaderboard_rounded,
                                   label: 'Classement',
                                   color: AppColors.accent,
-                                  onTap: () => context.go('/leaderboard'),
+                                  onTap: () => context.push('/leaderboard'),
                                 ),
                               ),
                             ],

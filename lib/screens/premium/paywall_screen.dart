@@ -78,6 +78,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             subtitle: 'Complétez autant de défis que vous voulez, chaque semaine',
           ),
           _FeatureRow(
+            icon: Icons.build_rounded,
+            title: 'Outils cyber avancés',
+            subtitle: 'Email Exposure, analyse d\'URL, checklist complète',
+          ),
+          _FeatureRow(
             icon: Icons.emoji_events,
             title: 'Tous les badges',
             subtitle: 'Débloquez l\'intégralité de la collection',
@@ -91,6 +96,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             icon: Icons.local_fire_department,
             title: 'Protection de streak',
             subtitle: 'Manquez un jour sans perdre votre série',
+          ),
+          _FeatureRow(
+            icon: Icons.phishing_rounded,
+            title: 'Simulateur de phishing',
+            subtitle: 'Entraînez-vous avec des scénarios réalistes',
           ),
           const SizedBox(height: 32),
 
@@ -373,7 +383,7 @@ class _FallbackPricing extends StatelessWidget {
       children: [
         _PricingCard(
           title: 'Mensuel',
-          price: '2,99 €',
+          price: '4,99 €',
           subtitle: 'Facturé chaque mois',
           highlighted: false,
           onTap: onPurchase,
@@ -381,8 +391,8 @@ class _FallbackPricing extends StatelessWidget {
         const SizedBox(height: 12),
         _PricingCard(
           title: 'Annuel',
-          price: '19,99 €',
-          subtitle: 'Économisez ~45%',
+          price: '49,99 €',
+          subtitle: 'Économisez ~17% — soit 4,17 €/mois',
           highlighted: true,
           onTap: onPurchase,
         ),
