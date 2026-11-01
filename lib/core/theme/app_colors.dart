@@ -1,34 +1,44 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  // Primary palette
-  static const primary = Color(0xFF2563EB);
-  static const primaryLight = Color(0xFF60A5FA);
-  static const primaryDark = Color(0xFF1D4ED8);
+  // Primary — deep electric indigo
+  static const primary = Color(0xFF4F46E5);
+  static const primaryLight = Color(0xFF818CF8);
+  static const primaryDark = Color(0xFF3730A3);
 
-  // Secondary (success/validation)
+  // Secondary — emerald
   static const secondary = Color(0xFF10B981);
   static const secondaryLight = Color(0xFF34D399);
   static const secondaryDark = Color(0xFF059669);
 
-  // Accent (gamification/energy)
+  // Accent — warm amber
   static const accent = Color(0xFFF59E0B);
   static const accentLight = Color(0xFFFBBF24);
   static const accentDark = Color(0xFFD97706);
 
-  // Error/Alert
+  // Error
   static const error = Color(0xFFEF4444);
   static const errorLight = Color(0xFFFCA5A5);
 
-  // Neutrals
-  static const background = Color(0xFFF9FAFB);
+  // Light neutrals
+  static const background = Color(0xFFF8FAFC);
   static const surface = Color(0xFFFFFFFF);
-  static const surfaceVariant = Color(0xFFF3F4F6);
-  static const textPrimary = Color(0xFF111827);
-  static const textSecondary = Color(0xFF6B7280);
-  static const textTertiary = Color(0xFF9CA3AF);
-  static const border = Color(0xFFE5E7EB);
-  static const divider = Color(0xFFF3F4F6);
+  static const surfaceVariant = Color(0xFFF1F5F9);
+  static const textPrimary = Color(0xFF0F172A);
+  static const textSecondary = Color(0xFF475569);
+  static const textTertiary = Color(0xFF94A3B8);
+  static const border = Color(0xFFE2E8F0);
+  static const divider = Color(0xFFF1F5F9);
+
+  // Dark neutrals
+  static const darkBackground = Color(0xFF0F172A);
+  static const darkSurface = Color(0xFF1E293B);
+  static const darkSurfaceVariant = Color(0xFF334155);
+  static const darkTextPrimary = Color(0xFFF1F5F9);
+  static const darkTextSecondary = Color(0xFF94A3B8);
+  static const darkTextTertiary = Color(0xFF64748B);
+  static const darkBorder = Color(0xFF334155);
+  static const darkDivider = Color(0xFF1E293B);
 
   // Semantic
   static const streak = Color(0xFFFF6B35);

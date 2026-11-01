@@ -11,86 +11,100 @@ class ChallengeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
+    final theme = Theme.of(context);
+    final catColor = _categoryColor(challenge.category);
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.cardTheme.color,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: theme.dividerColor.withOpacity(0.3)),
+        ),
+        clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header with category color
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              color: _categoryColor(challenge.category).withOpacity(0.1),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [catColor.withOpacity(0.12), catColor.withOpacity(0.04)],
+                ),
+              ),
               child: Row(
                 children: [
                   Text(
                     AppConstants.categoryIcons[challenge.category] ?? '',
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 22),
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    AppConstants.categoryLabels[challenge.category] ??
-                        challenge.category,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: _categoryColor(challenge.category),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      AppConstants.categoryLabels[challenge.category] ??
+                          challenge.category,
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: catColor,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                  const Spacer(),
                   _DifficultyBadge(difficulty: challenge.difficulty),
                 ],
               ),
             ),
-
-            // Content
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     challenge.title,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
                   Text(
                     challenge.description,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: theme.textTheme.bodyMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
                   Row(
                     children: [
-                      Icon(
-                        Icons.timer_outlined,
-                        size: 16,
-                        color: AppColors.textTertiary,
+                      _InfoPill(
+                        icon: Icons.timer_outlined,
+                        label: '${challenge.estimatedMinutes} min',
+                        color: theme.colorScheme.onSurface.withOpacity(0.5),
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${challenge.estimatedMinutes} min',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      const SizedBox(width: 16),
-                      Icon(
-                        Icons.stars_outlined,
-                        size: 16,
+                      const SizedBox(width: 10),
+                      _InfoPill(
+                        icon: Icons.bolt_rounded,
+                        label: '+${challenge.points} pts',
                         color: AppColors.accent,
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '+${challenge.points} pts',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.accent,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
                       const Spacer(),
-                      FilledButton.tonal(
-                        onPressed: onTap,
-                        child: const Text('Commencer'),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primary,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Text(
+                          'Go',
+                          style: TextStyle(
+                            color: theme.colorScheme.onPrimary,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -124,16 +138,16 @@ class _DifficultyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: _color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         AppConstants.difficultyLabels[difficulty] ?? difficulty,
         style: TextStyle(
           fontSize: 11,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
           color: _color,
         ),
       ),
@@ -151,5 +165,36 @@ class _DifficultyBadge extends StatelessWidget {
       default:
         return AppColors.textSecondary;
     }
+  }
+}
+
+class _InfoPill extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+
+  const _InfoPill({
+    required this.icon,
+    required this.label,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 15, color: color),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: color,
+          ),
+        ),
+      ],
+    );
   }
 }

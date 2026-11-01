@@ -1,16 +1,30 @@
 # CyberFit
 
-Application mobile Flutter de cyber-hygiène gamifiée. Un coach quotidien qui transforme la cybersécurité en habitude, comme Duolingo mais pour la sécurité numérique.
+Votre santé numérique, sous contrôle. Application mobile Flutter de cyber-hygiène gamifiée qui transforme la cybersécurité en habitude quotidienne.
 
-**Public cible** : Grand public français (18-45 ans), personnes conscientes des risques cyber mais ne sachant pas par où commencer.
+**Public cible** : Grand public français (18-45 ans), particuliers et organisations souhaitant améliorer leur hygiène numérique.
 
-## Fonctionnalités
+## Les 3 piliers
 
-- **Défis quotidiens** : 1 défi par jour (5-10 min) avec tutoriels step-by-step — mots de passe, 2FA, réseaux sociaux, emails, appareils
-- **Gamification** : streaks, points, niveaux (Débutant → Maître Cyber), badges à débloquer
-- **Scan de santé cyber** : score /100 sur 5 domaines, questionnaire initial, évolution graphique
-- **Bibliothèque de guides** : 30+ tutoriels filtrables par plateforme et catégorie
-- **Dashboard de progression** : graphiques, historique, statistiques détaillées
+### Apprendre — Le coach cyber
+- **Défis quotidiens** : 1 défi par jour (3-5 min) avec tutoriels step-by-step
+- **Quiz rapides** : 6 quiz de 5 questions par catégorie cyber
+- **Bibliothèque de guides** : tutoriels filtrables par plateforme et catégorie
+- **Gamification** : streaks, points, niveaux (Débutant → Maître Cyber), 16 badges
+
+### Se protéger — La boîte à outils cyber
+- **Password Checker** : évaluation locale de la robustesse d'un mot de passe
+- **Email Exposure** : vérification des fuites de données associées à un email
+- **Analyse d'URL** : détection de liens suspects, typosquatting, phishing
+- **Security Checklist** : suivi des actions de sécurisation (20 items, 5 catégories)
+- **Simulateur de phishing** : 10 scénarios réalistes pour tester ses réflexes
+- **Scanner QR** : vérification des destinations (à venir)
+
+### Suivre — Le tableau de bord CyberFit
+- **Score CyberFit** : score /100 sur 5 domaines, évolution graphique
+- **Radar chart** : visualisation par domaine avec breakdown détaillé
+- **Activité hebdomadaire** : historique et statistiques détaillées
+- **Classement** : top 50, podium top 3, onglets Points/Score/Streak
 
 ## Stack technique
 
@@ -34,9 +48,12 @@ lib/
 │   ├── auth/         # Login, register
 │   ├── onboarding/   # Welcome, questionnaire, résultats
 │   ├── home/         # Défi du jour, score, streaks
+│   ├── tools/        # Boîte à outils cyber (password, email, URL, checklist, phishing)
+│   ├── leaderboard/  # Classement entre joueurs
 │   ├── progress/     # Dashboard, graphiques, historique
 │   ├── guides/       # Bibliothèque tutoriels
-│   └── profile/      # Profil, badges, settings
+│   ├── profile/      # Profil, badges
+│   └── settings/     # Réglages (thème, notifications, compte)
 ├── widgets/          # Composants réutilisables
 └── services/         # Firebase, notifications, stockage local
 ```
@@ -108,8 +125,61 @@ Trois workflows GitHub Actions sont configurés :
 
 ## Modèle économique
 
-- **Gratuit** : 3 défis/semaine, score de base, 5 badges, 10 guides
-- **Premium** (4,99 €/mois ou 39 €/an) : défis illimités, scan HIBP, tous les badges, bibliothèque complète, alertes breaches
+- **CyberFit Free** : 3 défis/semaine, score de base, 5 badges, 10 guides, outils de base
+- **CyberFit Premium** (4,99 €/mois ou 49,99 €/an) : défis illimités, tous les badges, bibliothèque complète, outils avancés, simulateur de phishing, protection de streak
+
+## Roadmap Features
+
+Suivi des fonctionnalités à implémenter. Cocher au fur et à mesure.
+
+### Implémenté
+
+- [x] Authentification (email + Google Sign-In)
+- [x] Onboarding (questionnaire initial + score de départ)
+- [x] 28 défis quotidiens avec tutoriels step-by-step
+- [x] Système de score /100 sur 5 domaines
+- [x] Gamification : streaks, points, niveaux, badges
+- [x] Bibliothèque de guides (filtres, recherche, favoris)
+- [x] Profil complet (stats, badges, paramètres, suppression compte)
+- [x] Notifications quotidiennes configurables
+- [x] Modèle freemium (3 défis/semaine, limites guides/badges)
+- [x] Paywall RevenueCat (abonnement mensuel/annuel)
+- [x] Analytics Firebase
+- [x] CI/CD (lint, build, Firebase App Distribution)
+
+### À implémenter
+
+- [x] **Leaderboard** — classement entre utilisateurs, top 50, podium top 3, onglets Points/Score/Streak
+- [x] **Partage social** — partager son profil (image générée), son classement, ou ses défis complétés
+- [x] **Notifications push ciblées** — alerte streak en danger, rappel après inactivité, nouveau défi disponible
+- [x] **Quiz rapides** — 6 quiz de 5 questions par catégorie, avec explications et partage de score
+- [x] **Statistiques détaillées** — radar chart, barres par catégorie, activité hebdomadaire, stats détaillées
+- [x] **Actualités cybersécurité** — fil d'actus via RSS (Cybermalveillance, CNIL, Numerama)
+- [x] **Mode sombre** — thème dark complet avec détection automatique du système
+- [x] **Refonte UI** — design system revu, custom gauges, meilleure hiérarchie visuelle, bordures arrondies 20px
+- [x] **Écran Réglages** — thème, notifications, abonnement, à propos, gestion du compte
+- [x] **Guides favoris** — onglet favoris dans la bibliothèque, bookmark/unbookmark
+
+### Pilier "Se protéger" — Outils cyber
+
+- [x] **Password Checker** — évaluation locale de la force d'un mot de passe, score 0-100, estimation du temps de crack
+- [x] **Email Exposure** — vérification des fuites de données (mode démo avec 8 breaches simulées)
+- [x] **Analyse d'URL** — détection de phishing, typosquatting, TLD suspects, 9 checks automatiques
+- [x] **Security Checklist** — 20 items en 5 catégories, persistance locale, progression visuelle
+- [x] **Simulateur de phishing** — 10 scénarios réalistes (emails FR), scoring, explications détaillées
+- [x] **Navigation restructurée** — onglet "Outils" dans la barre de navigation, hub avec grille d'outils
+
+### Idées futures (post-MVP)
+
+- [ ] Scanner QR Code (vérification des destinations)
+- [ ] Email Exposure via API réelle (Have I Been Pwned)
+- [ ] Défis thématiques hebdomadaires (semaine phishing, semaine mots de passe...)
+- [ ] Mode hors-ligne complet (cache Hive)
+- [ ] CyberFit Family (59,99 €/an)
+- [ ] Dashboard entreprise B2B (CyberFit Business)
+- [ ] Rapports de conformité (NIS2, ANSSI)
+- [ ] Multi-langue (EN, ES, DE)
+- [ ] Privacy Checkup guidé
 
 ## Licence
 
